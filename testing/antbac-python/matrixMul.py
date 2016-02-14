@@ -1,5 +1,5 @@
-from random import randint
-
+import random
+import copy
 
 def add(m1, m2):
     result = copy.deepcopy(m1)
@@ -32,9 +32,10 @@ def naive(m1, m2):
 
 # No error checking is performed!
 # Make sure the matrices are of the correct sizes
-def strassen(m1, m2):
-    if len(m1) <= 16:
-        return naive(m1, m2)
+def strassen(A, B):
+    mid = len(A) // 2
+    if len(A) <= 256:
+        return naive(A, B)
     else:
         A11 = [A[i][:mid] for i in range(0, mid)]
         A12 = [A[i][mid:] for i in range(0, mid)]
@@ -44,13 +45,13 @@ def strassen(m1, m2):
         B12 = [B[i][mid:] for i in range(0, mid)]
         B21 = [B[i][:mid] for i in range(mid, len(B))]
         B22 = [B[i][mid:] for i in range(mid, len(B))]
-        P1 = Strassen(A11, sub(B12,B22))
-        P2 = Strassen(add(A11, A12), B22)
-        P3 = Strassen(add(A21, A22), B11)
-        P4 = Strassen(A22, sub(B21,B11))
-        P5 = Strassen(add(A11, A22), add(B11,B22))
-        P6 = Strassen(sub(A12, A22), add(B21,B22))
-        P7 = Strassen(sub(A11, A21), add(B11,B12))
+        P1 = strassen(A11, sub(B12,B22))
+        P2 = strassen(add(A11, A12), B22)
+        P3 = strassen(add(A21, A22), B11)
+        P4 = strassen(A22, sub(B21,B11))
+        P5 = strassen(add(A11, A22), add(B11,B22))
+        P6 = strassen(sub(A12, A22), add(B21,B22))
+        P7 = strassen(sub(A11, A21), add(B11,B12))
         C11 = add(sub(add(P5, P4), P2), P6)
         C12 = add(P1, P2)
         C21 = add(P3, P4)
@@ -67,7 +68,7 @@ def generate(x, y):
     for i in range (0, x):
         matrix.append([])
         for j in range (0, y):
-            matrix[i].append(randint(0, 10))
+            matrix[i].append(random.randint(0, 10))
     return matrix
 
 
@@ -78,13 +79,16 @@ def printMatrix(matrix):
         print()
     print()
 
-a = generate(4,4)
-b = generate(4,4)
-print("a")
-printMatrix(a)
-print("b")
-printMatrix(b)
-print("naive")
-printMatrix(naive(a, b))
-print("strassen")
-printMatrix(strassen(a, b))
+random.seed(1)
+a = generate(512,512)
+b = generate(512,512)
+#print("a")
+#printMatrix(a)
+#print("b")
+#printMatrix(b)
+#print("naive")
+#printMatrix(naive(a, b))
+#print("strassen")
+#printMatrix(strassen(a, b))
+strassen(a,b)
+#naive(a, b)
