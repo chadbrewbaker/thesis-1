@@ -11,5 +11,8 @@ void printArray(uint64_t **A, size_t size);
 void fillWithRandom(uint64_t **A, size_t size, size_t limit);
 void addNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size);
 void addLeft(uint64_t **A, uint64_t **B, size_t size);
+void subNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size);
+void subLeft(uint64_t **A, uint64_t **B, size_t size);
+void subRight(uint64_t **A, uint64_t **B, size_t size);
 
 #endif // FOO_GUARD_FOR_MYRANDOM

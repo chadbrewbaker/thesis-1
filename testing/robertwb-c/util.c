@@ -43,3 +43,27 @@ void addLeft(uint64_t **A, uint64_t **B, size_t size) {
     }
   }
 }
+
+void subNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
+  for (size_t i = 0; i < size; i++) {
+    for (size_t j = 0; j < size; j++) {
+      C[i][j] = A[i][j] - B[i][j];
+    }
+  }
+}
+
+void subLeft(uint64_t **A, uint64_t **B, size_t size) {
+  for (size_t i = 0; i < size; i++) {
+    for (size_t j = 0; j < size; j++) {
+      A[i][j] -= B[i][j];
+    }
+  }
+}
+
+void subRight(uint64_t **A, uint64_t **B, size_t size) {
+  for (size_t i = 0; i < size; i++) {
+    for (size_t j = 0; j < size; j++) {
+      B[i][j] = A[i][j] - B[i][j];
+    }
+  }
+}
