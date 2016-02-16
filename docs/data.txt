@@ -1,0 +1,1 @@
+our random function generates about 300,000,000 uint64 numbers per second with O2 and takes 2.75 times the runtime without O2. O3 was 10% slower.

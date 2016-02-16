@@ -19,17 +19,3 @@ uint64_t** matrixMultiplication(uint64_t** A, uint64_t** B, size_t size){
       //         C[i][j] = theSum
     return C;
 }
-
-uint64_t** getArray(size_t size){
-    uint64_t** arr;
-    arr  = (uint64_t **)malloc(sizeof(uint64_t *) * size);
-    arr[0] = (uint64_t *)malloc(sizeof(uint64_t) * size * size);
-
-    for(size_t i = 0; i < size; i++)
-        arr[i] = (*arr + size * i);
-    return arr;
-}
-
-void printArray(uint64_t** A){
-    
-}
