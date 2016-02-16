@@ -1,6 +1,6 @@
 #include "strassen.h"
 void strassen(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
-  if (size < 32) {
+  if (size < 16) {
     return matrixMultiplication(A, B, C, size);
   }
   size_t mid = size/2;
@@ -29,60 +29,60 @@ void strassen(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
   uint64_t **S1 = getArray(mid);
   uint64_t **S2 = getArray(mid);
 
-  addNew(A21, A22, S1, size);
-  subNew(S1, A11, S2, size);
+  addNew(A21, A22, S1, mid);
+  subNew(S1, A11, S2, mid);
 
-  subRight(A11, A21, size);
+  subRight(A11, A21, mid);
   uint64_t **S3 = A21;
 
   uint64_t **T1 = getArray(mid);
   uint64_t **T2 = getArray(mid);
-  subNew(B12, B11, T1, size);
-  subNew(B22, T1, T2, size);
+  subNew(B12, B11, T1, mid);
+  subNew(B22, T1, T2, mid);
 
-  subRight(B22, B12, size);
+  subRight(B22, B12, mid);
   uint64_t **T3 = B12;
 
   uint64_t **S4 = getArray(mid);
   uint64_t **T4 = getArray(mid);
-  subNew(A12, S2, S4, size);
-  subNew(T2, B21, T4, size);
+  subNew(A12, S2, S4, mid);
+  subNew(T2, B21, T4, mid);
 
   uint64_t **P1 = getArray(mid);
-  strassen(A11, B11, P1, size);
-  strassen(A12, B21, B11, size);
+  strassen(A11, B11, P1, mid);
+  strassen(A12, B21, B11, mid);
   uint64_t **P2 = B11;
-  strassen(S4, B22, B21, size);
+  strassen(S4, B22, B21, mid);
   uint64_t **P3 = B21;
-  strassen(A22, T4, A12, size);
+  strassen(A22, T4, A12, mid);
   uint64_t **P4 = A12;
-  strassen(S1, T1, S4, size);
+  strassen(S1, T1, S4, mid);
   uint64_t **P5 = S4;
-  strassen(S2, T2, B22, size);
+  strassen(S2, T2, B22, mid);
   uint64_t **P6 = B22;
-  strassen(S3, T3, T4, size);
+  strassen(S3, T3, T4, mid);
   uint64_t **P7 = T4;
 
-  //T4, A22, T1, S1, S2, T2, S3, T3, P6, P3
-  addLeft(P2, P1, size);
+  //A22, T1, S1, S2, T2, S3, T3, P6, P3
+  addLeft(P2, P1, mid);
   uint64_t **U1 = P2;
-  addLeft(P1, P6, size);
+  addLeft(P1, P6, mid);
   uint64_t **U2 = P1;
-  addLeft(P7, U2, size);
+  addLeft(P7, U2, mid);
   uint64_t **U3 = P7;
-  addLeft(U2, P5, size);
-  uint64_t **U4 = P2;
-  addLeft(U4, P3, size);
+  addLeft(U2, P5, mid);
+  uint64_t **U4 = U2;
+  addLeft(U4, P3, mid);
   uint64_t **U5 = U4;
-  subRight(U3, P4, size);
+  subRight(U3, P4, mid);
   uint64_t **U6 = P4;
-  addLeft(U3, P5, size);
+  addLeft(U3, P5, mid);
   uint64_t **U7 = U3;
 
-  printArray(U1, size);
-  printArray(U5, size);
-  printArray(U6, size);
-  printArray(U7, size);
+  printArray(U1, mid);
+  printArray(U5, mid);
+  printArray(U6, mid);
+  printArray(U7, mid);
   // # printMatrix(U1)
   // # print()
   // # printMatrix(U6)
