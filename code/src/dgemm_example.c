@@ -1,6 +1,6 @@
 /*******************************************************************************
 *   Copyright(C) 2012-2014 Intel Corporation. All Rights Reserved.
-*   
+*
 *   The source code, information  and  material ("Material") contained herein is
 *   owned  by Intel Corporation or its suppliers or licensors, and title to such
 *   Material remains  with Intel Corporation  or its suppliers or licensors. The
@@ -14,9 +14,9 @@
 *   implication, inducement,  estoppel or  otherwise.  Any  license  under  such
 *   intellectual  property  rights must  be express  and  approved  by  Intel in
 *   writing.
-*   
+*
 *   *Third Party trademarks are the property of their respective owners.
-*   
+*
 *   Unless otherwise  agreed  by Intel  in writing, you may not remove  or alter
 *   this  notice or  any other notice embedded  in Materials by Intel or Intel's
 *   suppliers or licensors in any way.
@@ -24,12 +24,12 @@
 ********************************************************************************/
 
 /*******************************************************************************
-*   This example computes real matrix C=alpha*A*B+beta*C using Intel(R) MKL 
-*   function dgemm, where A, B, and C are matrices and alpha and beta are 
-*   scalars in double precision. 
+*   This example computes real matrix C=alpha*A*B+beta*C using Intel(R) MKL
+*   function dgemm, where A, B, and C are matrices and alpha and beta are
+*   scalars in double precision.
 *
-*   In this simple example, practices such as memory management, data alignment, 
-*   and I/O that are necessary for good programming style and high MKL 
+*   In this simple example, practices such as memory management, data alignment,
+*   and I/O that are necessary for good programming style and high MKL
 *   performance are omitted to improve readability.
 ********************************************************************************/
 
@@ -49,7 +49,7 @@ int main()
             " Intel(R) MKL function dgemm, where A, B, and  C are matrices and \n"
             " alpha and beta are double precision scalars\n\n");
 
-    m = 2000, p = 200, n = 1000;
+    m = 1000, p = 1000, n = 1000;
     printf (" Initializing data for matrix multiplication C=A*B for matrix \n"
             " A(%ix%i) and matrix B(%ix%i)\n\n", m, p, p, n);
     alpha = 1.0; beta = 0.0;
@@ -81,7 +81,7 @@ int main()
     }
 
     printf (" Computing matrix product using Intel(R) MKL dgemm function via CBLAS interface \n\n");
-    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, 
+    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
                 m, n, p, alpha, A, p, B, n, beta, C, n);
     printf ("\n Computations completed.\n\n");
 
@@ -100,7 +100,7 @@ int main()
       }
       printf ("\n");
     }
-    
+
     printf ("\n Top left corner of matrix C: \n");
     for (i=0; i<min(m,6); i++) {
       for (j=0; j<min(n,6); j++) {
