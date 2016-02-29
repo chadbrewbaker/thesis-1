@@ -5,5 +5,7 @@
 #include <stdlib.h>
 #include "util.h"
 
-void matrixMultiplication(uint64_t **, uint64_t **, uint64_t **, size_t size);
+void matrixMultiplication(uint64_t **, uint64_t **, uint64_t **, size_t);
+void matrixMultiplicationTiled(uint64_t **, uint64_t **, uint64_t **, size_t);
+void matrixMultiplicationFixed(uint64_t **, uint64_t **, uint64_t **);
 #endif // FOO_GUARD_FOR_MYRANDOM
