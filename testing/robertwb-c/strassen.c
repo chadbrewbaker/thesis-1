@@ -1,7 +1,8 @@
 #include "strassen.h"
 void strassen(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
   if (size < 128) {
-    return matrixMultiplication(A, B, C, size);
+    matrixMultiplicationFixed(A, B, C);
+    return;
   }
   size_t mid = size/2;
   uint64_t **A11 = getArray(mid);

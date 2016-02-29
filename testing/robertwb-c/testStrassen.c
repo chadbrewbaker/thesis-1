@@ -2,7 +2,7 @@
 #include "util.h"
 #include "strassen.h"
 
-int main(int argc, char const *argv[]) {
+int main() {
   size_t arraySize = 1024;
   uint64_t **A = getArray(arraySize);
   fillWithRandom(A, arraySize, 10);
