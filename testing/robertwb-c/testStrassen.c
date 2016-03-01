@@ -20,7 +20,7 @@ int main() {
   uint64_t **C = getArray(arraySize);
   struct timeval stop, start;
   gettimeofday(&start, NULL);
-  int LOOP_COUNT = 10;
+  size_t LOOP_COUNT = 1;
   for (size_t i = 0; i < LOOP_COUNT; i++) {
     strassen(A, B, C, arraySize);
   }
@@ -30,8 +30,11 @@ int main() {
   printf("took %lu\n", ms / LOOP_COUNT);
   // printArray(C, arraySize);
   // matrixMultiplication(A, B, C, arraySize);
-  // printArray(C, arraySize);
+  printArray(C, arraySize);
   // printf("%lu\n", C[0][0]);
+  // printf("%lu\n", C[0][1]);
+  // printf("%lu\n", C[1][0]);
+  // printf("%lu\n", C[1][1]);
   free(A[0]);
   free(A);
   free(B[0]);

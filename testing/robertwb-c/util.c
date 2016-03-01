@@ -28,42 +28,73 @@ void fillWithRandom(uint64_t **A, size_t size, size_t limit) {
   }
 }
 
+// void addNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
+//   for (size_t i = 0; i < size; i++) {
+//     for (size_t j = 0; j < size; j++) {
+//       C[i][j] = A[i][j] + B[i][j];
+//     }
+//   }
+// }
+
 void addNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
-  for (size_t i = 0; i < size; i++) {
-    for (size_t j = 0; j < size; j++) {
-      C[i][j] = A[i][j] + B[i][j];
-    }
+  for (size_t i = 0; i < size*size; i++) {
+    C[0][i] = A[0][i] + B[0][i];
   }
 }
 
 void addLeft(uint64_t **A, uint64_t **B, size_t size) {
-  for (size_t i = 0; i < size; i++) {
-    for (size_t j = 0; j < size; j++) {
-      A[i][j] += B[i][j];
-    }
+  for (size_t i = 0; i < size*size; i++) {
+    A[0][i] += B[0][i];
   }
 }
+//
+// void addLeft(uint64_t **A, uint64_t **B, size_t size) {
+//   for (size_t i = 0; i < size; i++) {
+//     for (size_t j = 0; j < size; j++) {
+//       A[i][j] += B[i][j];
+//     }
+//   }
+// }
+
+// void subNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
+//   for (size_t i = 0; i < size; i++) {
+//     for (size_t j = 0; j < size; j++) {
+//       C[i][j] = A[i][j] - B[i][j];
+//     }
+//   }
+// }
 
 void subNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
-  for (size_t i = 0; i < size; i++) {
-    for (size_t j = 0; j < size; j++) {
-      C[i][j] = A[i][j] - B[i][j];
-    }
+  for (size_t i = 0; i < size*size; i++) {
+    C[0][i] = A[0][i] - B[0][i];
   }
 }
 
 void subLeft(uint64_t **A, uint64_t **B, size_t size) {
-  for (size_t i = 0; i < size; i++) {
-    for (size_t j = 0; j < size; j++) {
-      A[i][j] -= B[i][j];
-    }
+  for (size_t i = 0; i < size*size; i++) {
+    A[0][i] -= B[0][i];
   }
 }
 
+// void subLeft(uint64_t **A, uint64_t **B, size_t size) {
+//   for (size_t i = 0; i < size; i++) {
+//     for (size_t j = 0; j < size; j++) {
+//       A[i][j] -= B[i][j];
+//     }
+//   }
+// }
+
+// void subRight(uint64_t **A, uint64_t **B, size_t size) {
+//   for (size_t i = 0; i < size; i++) {
+//     for (size_t j = 0; j < size; j++) {
+//       B[i][j] = A[i][j] - B[i][j];
+//     }
+//   }
+// }
+
+
 void subRight(uint64_t **A, uint64_t **B, size_t size) {
-  for (size_t i = 0; i < size; i++) {
-    for (size_t j = 0; j < size; j++) {
-      B[i][j] = A[i][j] - B[i][j];
-    }
+  for (size_t i = 0; i < size*size; i++) {
+    B[0][i] = A[0][i] - B[0][i];
   }
 }
