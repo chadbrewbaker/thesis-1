@@ -1,40 +1,46 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#ifndef truncate
-#define truncate 2
+#ifndef TRUNCATE
+#define TRUNCATE 32
 #endif
 
-#ifndef size
-#define size 4
+#ifndef SIZE
+#define SIZE 64
 #endif
 
-static int *A, *B, *C;
+static int *A;
 
-struct Quad {
+typedef struct Quad {
   int* matrix;
-  int dimensions;
+  int elements;
   struct Quad *children[4];
-} quadA, quadB;
+} Quad;
 
-void constructQuad(struct Quad *quad) {
-  if(quad->dimensions > truncate) {
-    int dimensions = quad->dimensions >> 1;
+void constructQuad(Quad *quad) {
+  if(quad->elements > TRUNCATE * TRUNCATE) {
+    int elements = quad->elements >> 2;
+
     int* address0 = quad->matrix;
-    int* address1 = address0 + (dimensions) * sizeof(int);
-    int* address2 = address0 + (dimensions * quad->dimensions) * sizeof(int);
-    int* address3 = address1 + (dimensions * quad->dimensions) * sizeof(int);
+    int* address1 = address0 + elements * 1;
+    int* address2 = address0 + elements * 2;
+    int* address3 = address0 + elements * 3;
 
-// TODO : How do I make this more beautiful?
-    struct Quad temp0 = {address0, dimensions};
-    struct Quad temp1 = {address1, dimensions};
-    struct Quad temp2 = {address2, dimensions};
-    struct Quad temp3 = {address3, dimensions};
-    quad->children[0] = &temp0;
-    quad->children[1] = &temp1;
-    quad->children[2] = &temp2;
-    quad->children[3] = &temp3;
-// end TODO
+    quad->children[0] = (Quad*) malloc(sizeof(Quad));
+    quad->children[1] = (Quad*) malloc(sizeof(Quad));
+    quad->children[2] = (Quad*) malloc(sizeof(Quad));
+    quad->children[3] = (Quad*) malloc(sizeof(Quad));
+
+    quad->children[0]->matrix = address0;
+    quad->children[1]->matrix = address1;
+    quad->children[2]->matrix = address2;
+    quad->children[3]->matrix = address3;
+
+    quad->children[0]->elements = elements;
+    quad->children[1]->elements = elements;
+    quad->children[2]->elements = elements;
+    quad->children[3]->elements = elements;
+
     constructQuad(quad->children[0]);
     constructQuad(quad->children[1]);
     constructQuad(quad->children[2]);
@@ -42,9 +48,18 @@ void constructQuad(struct Quad *quad) {
   }
 }
 
+Quad* newQuad() {
+  Quad *temp = (Quad*) malloc(sizeof(Quad));
+  int *matrix = (int*) malloc(SIZE * SIZE * sizeof(int));
+  temp->elements = SIZE * SIZE;
+  temp->matrix = matrix;
+  constructQuad(temp);
+  return temp;
+}
+
 void printAddresses(struct Quad *quad) {
-  if(quad->dimensions == truncate) {
-    printf("%u\n", quad->matrix);
+  if(quad->elements == TRUNCATE * TRUNCATE) {
+    printf("Address : %zd\n", quad->matrix);
   }else{
     printAddresses(quad->children[0]);
     printAddresses(quad->children[1]);
@@ -53,22 +68,29 @@ void printAddresses(struct Quad *quad) {
   }
 }
 
+void printValues(struct Quad *quad) {
+  if(quad->elements == TRUNCATE * TRUNCATE) {
+    for (size_t i = 0; i < quad->elements; i++) {
+      printf("Value : %zd\n", quad->matrix[i]);
+    }
+  }else{
+    printValues(quad->children[0]);
+    printValues(quad->children[1]);
+    printValues(quad->children[2]);
+    printValues(quad->children[3]);
+  }
+}
+
 int main() {
-  A = (int*) malloc(sizeof(int) * size * size);
-  B = (int*) malloc(sizeof(int) * size * size);
-  C = (int*) malloc(sizeof(int) * size * size);
-  quadA.matrix = A;
-  quadA.dimensions = size;
-  quadB.matrix = B;
-  quadB.dimensions = size;
-  constructQuad(&quadA);
-  for (int i = 0; i < size * size; i++) {
-    A[i] = i;
-    B[i] = i+i;
-    C[i] = i+i+i;
+  A = (int*) malloc(sizeof(int) * SIZE * SIZE);
+
+  Quad *quadA = newQuad();
+
+  for (int i = 0; i < SIZE * SIZE; i++) {
+    quadA->matrix[i] = i;
   }
 
-  printf("%d\n", &(quadA.children[0]->dimensions)); // This does not give me the address of the integer called dimensions in the first child of quadA
-  printAddresses(&quadA);
+  printAddresses(quadA);
+  printValues(quadA);
   return 0;
 }
