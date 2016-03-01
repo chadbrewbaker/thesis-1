@@ -1,16 +1,16 @@
 #include "util.h"
 
-uint64_t **getArray(size_t size) {
-  uint64_t **arr;
-  arr = (uint64_t **)malloc(sizeof(uint64_t *) * size);
-  arr[0] = (uint64_t *)malloc(sizeof(uint64_t) * size * size);
+my_type **getArray(size_t size) {
+  my_type **arr;
+  arr = (my_type **)malloc(sizeof(my_type *) * size);
+  arr[0] = (my_type *)malloc(sizeof(my_type) * size * size);
 
   for (size_t i = 0; i < size; i++)
     arr[i] = (*arr + size * i);
   return arr;
 }
 
-void printArray(uint64_t **A, size_t size) {
+void printArray(my_type **A, size_t size) {
   for (size_t i = 0; i < size; i++) {
     for (size_t j = 0; j < size; j++) {
       printf("%lu ", A[i][j]);
@@ -20,7 +20,7 @@ void printArray(uint64_t **A, size_t size) {
   printf("--------------------------------------------------------------\n");
 }
 
-void fillWithRandom(uint64_t **A, size_t size, size_t limit) {
+void fillWithRandom(my_type **A, size_t size, size_t limit) {
   for (size_t i = 0; i < size; i++) {
     for (size_t j = 0; j < size; j++) {
       A[i][j] = xorshift128plus() % limit;
@@ -28,7 +28,7 @@ void fillWithRandom(uint64_t **A, size_t size, size_t limit) {
   }
 }
 
-// void addNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
+// void addNew(my_type **A, my_type **B, my_type **C, size_t size) {
 //   for (size_t i = 0; i < size; i++) {
 //     for (size_t j = 0; j < size; j++) {
 //       C[i][j] = A[i][j] + B[i][j];
@@ -36,19 +36,19 @@ void fillWithRandom(uint64_t **A, size_t size, size_t limit) {
 //   }
 // }
 
-void addNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
+void addNew(my_type **A, my_type **B, my_type **C, size_t size) {
   for (size_t i = 0; i < size*size; i++) {
     C[0][i] = A[0][i] + B[0][i];
   }
 }
 
-void addLeft(uint64_t **A, uint64_t **B, size_t size) {
+void addLeft(my_type **A, my_type **B, size_t size) {
   for (size_t i = 0; i < size*size; i++) {
     A[0][i] += B[0][i];
   }
 }
 //
-// void addLeft(uint64_t **A, uint64_t **B, size_t size) {
+// void addLeft(my_type **A, my_type **B, size_t size) {
 //   for (size_t i = 0; i < size; i++) {
 //     for (size_t j = 0; j < size; j++) {
 //       A[i][j] += B[i][j];
@@ -56,7 +56,7 @@ void addLeft(uint64_t **A, uint64_t **B, size_t size) {
 //   }
 // }
 
-// void subNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
+// void subNew(my_type **A, my_type **B, my_type **C, size_t size) {
 //   for (size_t i = 0; i < size; i++) {
 //     for (size_t j = 0; j < size; j++) {
 //       C[i][j] = A[i][j] - B[i][j];
@@ -64,19 +64,19 @@ void addLeft(uint64_t **A, uint64_t **B, size_t size) {
 //   }
 // }
 
-void subNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
+void subNew(my_type **A, my_type **B, my_type **C, size_t size) {
   for (size_t i = 0; i < size*size; i++) {
     C[0][i] = A[0][i] - B[0][i];
   }
 }
 
-void subLeft(uint64_t **A, uint64_t **B, size_t size) {
+void subLeft(my_type **A, my_type **B, size_t size) {
   for (size_t i = 0; i < size*size; i++) {
     A[0][i] -= B[0][i];
   }
 }
 
-// void subLeft(uint64_t **A, uint64_t **B, size_t size) {
+// void subLeft(my_type **A, my_type **B, size_t size) {
 //   for (size_t i = 0; i < size; i++) {
 //     for (size_t j = 0; j < size; j++) {
 //       A[i][j] -= B[i][j];
@@ -84,7 +84,7 @@ void subLeft(uint64_t **A, uint64_t **B, size_t size) {
 //   }
 // }
 
-// void subRight(uint64_t **A, uint64_t **B, size_t size) {
+// void subRight(my_type **A, my_type **B, size_t size) {
 //   for (size_t i = 0; i < size; i++) {
 //     for (size_t j = 0; j < size; j++) {
 //       B[i][j] = A[i][j] - B[i][j];
@@ -93,7 +93,7 @@ void subLeft(uint64_t **A, uint64_t **B, size_t size) {
 // }
 
 
-void subRight(uint64_t **A, uint64_t **B, size_t size) {
+void subRight(my_type **A, my_type **B, size_t size) {
   for (size_t i = 0; i < size*size; i++) {
     B[0][i] = A[0][i] - B[0][i];
   }

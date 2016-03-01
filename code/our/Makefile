@@ -17,5 +17,8 @@ print_flags:
 
 
 $%.c: $(FILES) $(HEADERS) $^
-	$(CC) $(FLAGS) $^ $(FILES)
-	@echo $(CC) $(FLAGS) $^ $(FILES)
+	$(CC) $(FLAGS) $^ $(FILES) -o $@.out
+	# @echo $(CC) $(FLAGS) $^ $(FILES) -o $@
+
+clean:
+	\rm -rf *.out *.o *.d

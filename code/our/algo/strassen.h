@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "util.h"
 #include "naive.h"
+#include "defines.h"
 
-void strassen(uint64_t **, uint64_t **, uint64_t **, size_t);
+
+void strassen(my_type **, my_type **, my_type **, size_t);
 #endif // FOO_GUARD_FOR_MYRANDOM

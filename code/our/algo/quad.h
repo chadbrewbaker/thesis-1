@@ -4,13 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include "defines.h"
 
-#define MY_DATA_TYPE uint64_t;
 
 typedef struct Quad Quad;
 struct Quad {
-  uint64_t *matrix;
-  int elements;
+  my_type *matrix;
+  uint32_t elements;
   struct Quad *children[4];
 };
 
@@ -18,8 +18,8 @@ void constructQuad(Quad *);
 Quad *newQuad();
 void printAddresses(Quad *);
 void printValues(Quad *);
-void mortonify(uint64_t *, Quad *, int, int, int);
-void deMortonify(uint64_t *, Quad *, int, int, int);
-void compare(uint64_t *, uint64_t *);
+void mortonify(my_type *, Quad *, uint32_t, uint32_t, uint32_t);
+void deMortonify(my_type *, Quad *, uint32_t, uint32_t, uint32_t);
+void compare(my_type *, my_type *);
 
 #endif
