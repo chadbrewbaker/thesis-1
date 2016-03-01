@@ -19,5 +19,7 @@ Quad *newQuad();
 void printAddresses(Quad *);
 void printValues(Quad *);
 void mortonify(uint64_t *, Quad *, int, int, int);
+void deMortonify(uint64_t *, Quad *, int, int, int);
+void compare(uint64_t *, uint64_t *);
 
 #endif

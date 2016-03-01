@@ -90,8 +90,36 @@ void mortonify(uint64_t *original, Quad *quad, int dimensions, int x, int y) {
   }
 }
 
-int quadTest() {
+void deMortonify(uint64_t *original, Quad *quad, int dimensions, int x, int y) {
+  if (dimensions == TRUNCATE) {
+    for (size_t i = 0; i < TRUNCATE; i++) {
+      for (size_t j = 0; j < TRUNCATE; j++) {
+        original[SIZE * (y + i) + x + j] = quad->matrix[j + i * dimensions];
+      }
+    }
+  } else {
+    deMortonify(original, quad->children[0], dimensions >> 1, x, y);
+    deMortonify(original, quad->children[1], dimensions >> 1,
+              x + (dimensions >> 1), y);
+    deMortonify(original, quad->children[2], dimensions >> 1, x,
+              y + (dimensions >> 1));
+    deMortonify(original, quad->children[3], dimensions >> 1,
+              x + (dimensions >> 1), y + (dimensions >> 1));
+  }
+}
+
+void compare(uint64_t *a, uint64_t *b) {
+  for (size_t i = 0; i < SIZE * SIZE; i++) {
+    if(a[i] != b[i]) {
+      printf("Error! i = %lu a was : %lu b was : %lu\n", i, a[i], b[i]);
+      return;
+    }
+  }
+}
+
+int main() {
   uint64_t *A = (uint64_t *)malloc(sizeof(uint64_t) * SIZE * SIZE);
+  uint64_t *C = (uint64_t *)malloc(sizeof(uint64_t) * SIZE * SIZE);
 
   Quad *quadA = newQuad();
 
@@ -100,11 +128,16 @@ int quadTest() {
   }
 
   mortonify(A, quadA, SIZE, 0, 0);
+  deMortonify(C, quadA, SIZE, 0, 0);
+
+  compare(A, C);
 
   // printAddresses(quadA);
   // printValues(quadA);
+  /*
   for (size_t i = 0; i < SIZE * SIZE; i++) {
     printf("%lu\n", quadA->matrix[i]);
   }
+  */
   return 0;
 }
