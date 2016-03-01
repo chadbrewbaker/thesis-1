@@ -45,9 +45,12 @@ void strassen(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
   subRight(A11, A21, mid);
   uint64_t **S3 = A21;
 
-  uint64_t **T1 = getArray(mid);
-  uint64_t **T2 = getArray(mid);
+  uint64_t **P1 = getArray(mid);
+  strassen(A11, B11, P1, mid);
+  uint64_t **T1 = A11;
   subNew(B12, B11, T1, mid);
+
+  uint64_t **T2 = getArray(mid);
   subNew(B22, T1, T2, mid);
 
   subRight(B22, B12, mid);
@@ -58,10 +61,6 @@ void strassen(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
   subNew(A12, S2, S4, mid);
   subNew(T2, B21, T4, mid);
 
-  uint64_t **P1 = getArray(mid);
-  strassen(A11, B11, P1, mid);
-  free(A11[0]);
-  free(A11);
   strassen(A12, B21, B11, mid);
   uint64_t **P2 = B11;
   strassen(S4, B22, B21, mid);

@@ -1,6 +1,21 @@
 SOURCES ?= strassen.c util.c naive.c myRandom.c
-GCCFLAGS ?= -O2 -march=native -funroll-loops --param max-unroll-times=4 -std=c99 -Wall -Wextra
-ICCFLAGS ?= -fast -ipo -no-prec-div -static -opt-prefetch -unroll-aggressive -march=native -std=c99 -Wall -Wextra
 
+FLAGS ?= -O2 -march=native -funroll-loops --param max-unroll-times=4 -std=c99 -Wall -Wextra
 CC	= gcc
+
+# FLAGS ?= -fast -ipo -no-prec-div -static -opt-prefetch -unroll-aggressive -march=native -std=c99 -Wall -Wextra
 # CC	= icc
+FILES := $(wildcard algo/*.c)
+HEADERS := $(wildcard algo/*.h)
+
+
+print_flags:
+	@echo "FILES  := $(FILES)"
+	@echo "FLAGS  := $(FLAGS)"
+	@echo "HEADERS  := $(HEADERS)"
+
+
+
+$%.c: $(FILES) $(HEADERS) $^
+	$(CC) $(FLAGS) $^ $(FILES)
+	@echo $(CC) $(FLAGS) $^ $(FILES)

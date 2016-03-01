@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "myRandom.h"
+#include "algo/myRandom.h"
 
 int main(int argc, char const *argv[]) {
 

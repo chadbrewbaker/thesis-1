@@ -1,5 +1,5 @@
-#include "naive.h"
-#include "util.h"
+#include "algo/naive.h"
+#include "algo/util.h"
 
 #ifndef ARRAYSIZE
 #define ARRAYSIZE 1024
