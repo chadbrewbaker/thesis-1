@@ -8,4 +8,3 @@ void fct(double_32 *__restrict r,
 	for (unsigned i = 0; i < 128; ++i)
 		r[i] = a[i] * f + b[i];
 }
-
