@@ -1,23 +1,20 @@
 #include "algo/naive.h"
 #include "algo/util.h"
 #include "algo/strassen.h"
+#include "algo/defines.h"
 
 #include <stdio.h>
 #include <sys/time.h>
 #include <stdlib.h>
 
-#ifndef ARRAYSIZE
-#define ARRAYSIZE 1024
-#endif
-
 int main() {
   size_t arraySize = ARRAYSIZE;
-  uint64_t **A = getArray(arraySize);
+  my_type **A = getArray(arraySize);
   fillWithRandom(A, arraySize, 10);
   // printArray(A, arraySize);
-  uint64_t **B = getArray(arraySize);
+  my_type **B = getArray(arraySize);
   fillWithRandom(B, arraySize, 10);
-  uint64_t **C = getArray(arraySize);
+  my_type **C = getArray(arraySize);
   struct timeval stop, start;
   gettimeofday(&start, NULL);
   size_t LOOP_COUNT = 1;
