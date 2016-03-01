@@ -1,6 +1,6 @@
 /*******************************************************************************
 *   Copyright(C) 2012-2014 Intel Corporation. All Rights Reserved.
-*   
+*
 *   The source code, information  and  material ("Material") contained herein is
 *   owned  by Intel Corporation or its suppliers or licensors, and title to such
 *   Material remains  with Intel Corporation  or its suppliers or licensors. The
@@ -14,9 +14,9 @@
 *   implication, inducement,  estoppel or  otherwise.  Any  license  under  such
 *   intellectual  property  rights must  be express  and  approved  by  Intel in
 *   writing.
-*   
+*
 *   *Third Party trademarks are the property of their respective owners.
-*   
+*
 *   Unless otherwise  agreed  by Intel  in writing, you may not remove  or alter
 *   this  notice or  any other notice embedded  in Materials by Intel or Intel's
 *   suppliers or licensors in any way.
@@ -24,12 +24,12 @@
 ********************************************************************************/
 
 /*******************************************************************************
-*   This example demonstrates threading impact on computing real matrix product 
-*   C=alpha*A*B+beta*C using Intel(R) MKL subroutine DGEMM, where A, B, and C 
-*   are matrices and alpha and beta are double precision scalars. 
+*   This example demonstrates threading impact on computing real matrix product
+*   C=alpha*A*B+beta*C using Intel(R) MKL subroutine DGEMM, where A, B, and C
+*   are matrices and alpha and beta are double precision scalars.
 *
-*   In this simple example, practices such as memory management, data alignment, 
-*   and I/O that are necessary for good programming style and high MKL 
+*   In this simple example, practices such as memory management, data alignment,
+*   and I/O that are necessary for good programming style and high MKL
 *   performance are omitted to improve readability.
 ********************************************************************************/
 
@@ -51,12 +51,12 @@ int main()
     printf ("\n This example demonstrates threading impact on computing real matrix product \n"
             " C=alpha*A*B+beta*C using Intel(R) MKL function dgemm, where A, B, and C are \n"
             " matrices and alpha and beta are double precision scalars \n\n");
-    
-    m = 2000, p = 200, n = 1000;
+
+    m = 1024, p = 1024, n = 1024;
     printf (" Initializing data for matrix multiplication C=A*B for matrix \n"
             " A(%ix%i) and matrix B(%ix%i)\n\n", m, p, p, n);
     alpha = 1.0; beta = 0.0;
-    
+
     printf (" Allocating memory for matrices aligned on 64-byte boundary for better \n"
             " performance \n\n");
     A = (double *)mkl_malloc( m*p*sizeof( double ), 64 );
@@ -90,20 +90,20 @@ int main()
     for (i = 1; i <= max_threads; i++) {
         for (j = 0; j < (m*n); j++)
             C[j] = 0.0;
-        
+
         printf (" Requesting Intel(R) MKL to use %i thread(s) \n\n", i);
         mkl_set_num_threads(i);
 
         printf (" Making the first run of matrix product using Intel(R) MKL dgemm function \n"
                 " via CBLAS interface to get stable run time measurements \n\n");
-        cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, 
+        cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
                     m, n, p, alpha, A, p, B, n, beta, C, n);
-        
+
         printf (" Measuring performance of matrix product using Intel(R) MKL dgemm function \n"
                 " via CBLAS interface on %i thread(s) \n\n", i);
         s_initial = dsecnd();
         for (r = 0; r < LOOP_COUNT; r++) {
-            cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, 
+            cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
                         m, n, p, alpha, A, p, B, n, beta, C, n);
         }
         s_elapsed = (dsecnd() - s_initial) / LOOP_COUNT;
@@ -111,12 +111,12 @@ int main()
         printf (" == Matrix multiplication using Intel(R) MKL dgemm completed ==\n"
                 " == at %.5f milliseconds using %d thread(s) ==\n\n", (s_elapsed * 1000), i);
     }
-    
+
     printf (" Deallocating memory \n\n");
     mkl_free(A);
     mkl_free(B);
     mkl_free(C);
-    
+
     if (s_elapsed < 0.9/LOOP_COUNT) {
         s_elapsed=1.0/LOOP_COUNT/s_elapsed;
         i=(int)(s_elapsed*LOOP_COUNT)+1;

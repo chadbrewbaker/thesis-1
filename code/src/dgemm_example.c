@@ -49,7 +49,7 @@ int main()
             " Intel(R) MKL function dgemm, where A, B, and  C are matrices and \n"
             " alpha and beta are double precision scalars\n\n");
 
-    m = 1000, p = 1000, n = 1000;
+    m = 1024, p = 1024, n = 1024;
     printf (" Initializing data for matrix multiplication C=A*B for matrix \n"
             " A(%ix%i) and matrix B(%ix%i)\n\n", m, p, p, n);
     alpha = 1.0; beta = 0.0;

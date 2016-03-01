@@ -2,25 +2,30 @@ avacore@avacorias ~/Documents/src $ icc -mkl dgemm_example.c ^C
 avacore@avacorias ~/Documents/src $ echo $LD_LIBRARY_PATH
 
 avacore@avacorias ~/Documents/src $ sudo ldconfig
-[sudo] password for avacore: 
+[sudo] password for avacore:
 Sorry, try again.
-[sudo] password for avacore: 
-avacore@avacorias ~/Documents/src $ ./a.out 
+[sudo] password for avacore:
+avacore@avacorias ~/Documents/src $ ./a.out
 ./a.out: error while loading shared libraries: libmkl_intel_lp64.so: cannot open
 shared object file: No such file or directory
 avacore@avacorias ~/Documents/src $ LD_LIBRARY_PATH=/usr/local/lib
 avacore@avacorias ~/Documents/src $
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/intel/lib/intel64_lin/libmkl_intel_lp64.so
-avacore@avacorias ~/Documents/src $ ./a.out 
+avacore@avacorias ~/Documents/src $ ./a.out
 ./a.out: error while loading shared libraries: libmkl_intel_lp64.so: cannot open
 shared object file: No such file or directory
-avacore@avacorias ~/Documents/src $ LD_LIBRARY_PATH=/usr/local/lib
+
 avacore@avacorias ~/Documents/src $
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/intel/compilers_and_libraries_2016.1.150/linux/mkl/lib/intel64_lin/
-avacore@avacorias ~/Documents/src $ export LD_LIBRARY_PATH
-avacore@avacorias ~/Documents/src $ ./a.out 
+avacore@avacorias ~/Documents/src $
+
+avacore@avacorias ~/Documents/src $
+avacore@avacorias ~/Documents/src $ ./a.out
 ./a.out: error while loading shared libraries: libiomp5.so: cannot open shared
 object file: No such file or directory
 avacore@avacorias ~/Documents/src $
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/intel/compilers_and_libraries_2016.1.150/linux/compiler/lib/intel64_lin
 avacore@avacorias ~/Documents/src $ export LD_LIBRARY_PATH
+
+LD_LIBRARY_PATH=/usr/local/lib
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/intel/compilers_and_libraries_2016.1.150/linux/mkl/lib/intel64_lin
+export LD_LIBRARY_PATH
