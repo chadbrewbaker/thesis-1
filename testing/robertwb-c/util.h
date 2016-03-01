@@ -6,13 +6,13 @@
 #include <stdio.h>
 #include "myRandom.h"
 
-uint64_t **getArray(size_t size);
-void printArray(uint64_t **A, size_t size);
-void fillWithRandom(uint64_t **A, size_t size, size_t limit);
-void addNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size);
-void addLeft(uint64_t **A, uint64_t **B, size_t size);
-void subNew(uint64_t **A, uint64_t **B, uint64_t **C, size_t size);
-void subLeft(uint64_t **A, uint64_t **B, size_t size);
-void subRight(uint64_t **A, uint64_t **B, size_t size);
+uint64_t **getArray(size_t);
+void printArray(uint64_t **, size_t);
+void fillWithRandom(uint64_t **, size_t, size_t);
+void addNew(uint64_t **, uint64_t **, uint64_t **, size_t);
+void addLeft(uint64_t **, uint64_t **, size_t);
+void subNew(uint64_t **, uint64_t **, uint64_t **, size_t);
+void subLeft(uint64_t **, uint64_t **, size_t);
+void subRight(uint64_t **, uint64_t **, size_t);
 
 #endif // FOO_GUARD_FOR_MYRANDOM

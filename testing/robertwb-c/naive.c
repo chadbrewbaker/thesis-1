@@ -1,5 +1,6 @@
 #include "naive.h"
-void matrixMultiplication(uint64_t **A, uint64_t **B, uint64_t **C, size_t size){
+void matrixMultiplication(uint64_t **A, uint64_t **B, uint64_t **C,
+                          size_t size) {
   for (size_t i = 0; i < size; i++) {
     for (size_t j = 0; j < size; j++) {
       int sum = 0;
@@ -15,12 +16,15 @@ void matrixMultiplication(uint64_t **A, uint64_t **B, uint64_t **C, size_t size)
 #ifndef TILESIZE
 #define TILESIZE 32
 #endif
+#ifndef FIXEDSIZE
+#define FIXEDSIZE 64
+#endif
 
-void matrixMultiplicationFixed(uint64_t **A, uint64_t **B, uint64_t **C){
-  for (size_t i = 0; i < 64; i++) {
-    for (size_t j = 0; j < 64; j++) {
+void matrixMultiplicationFixed(uint64_t **A, uint64_t **B, uint64_t **C) {
+  for (size_t i = 0; i < FIXEDSIZE; i++) {
+    for (size_t j = 0; j < FIXEDSIZE; j++) {
       int sum = 0;
-      for (size_t k = 0; k < 64; k++) {
+      for (size_t k = 0; k < FIXEDSIZE; k++) {
         sum += A[i][k] * B[k][j];
       }
       C[i][j] = sum;
@@ -29,7 +33,8 @@ void matrixMultiplicationFixed(uint64_t **A, uint64_t **B, uint64_t **C){
   return;
 }
 
-void matrixMultiplicationTiled(uint64_t **A, uint64_t **B, uint64_t **C, size_t size){
+void matrixMultiplicationTiled(uint64_t **A, uint64_t **B, uint64_t **C,
+                               size_t size) {
   for (size_t i = 0; i < size; i += TILESIZE) {
     for (size_t j = 0; j < size; j += TILESIZE) {
       for (size_t k = 0; k < size; k++) {

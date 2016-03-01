@@ -1,11 +1,9 @@
 #include "naive.h"
 #include "util.h"
 
-
 #ifndef ARRAYSIZE
 #define ARRAYSIZE 1024
 #endif
-
 
 int main() {
   size_t arraySize = ARRAYSIZE;

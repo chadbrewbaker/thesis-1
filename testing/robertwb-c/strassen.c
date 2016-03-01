@@ -1,10 +1,19 @@
 #include "strassen.h"
+
+#ifndef FIXEDSIZE
+#define FIXEDSIZE 64
+#endif
+
 void strassen(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
-  if (size < 128) {
+  // if (size <  128) {
+  //   matrixMultiplicationTiled(A, B, C, size);
+  //   return;
+  // }
+  if (size < FIXEDSIZE * 2) {
     matrixMultiplicationFixed(A, B, C);
     return;
   }
-  size_t mid = size/2;
+  size_t mid = size / 2;
   uint64_t **A11 = getArray(mid);
   uint64_t **A12 = getArray(mid);
   uint64_t **A21 = getArray(mid);
@@ -17,13 +26,13 @@ void strassen(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
   for (size_t i = 0; i < mid; i++) {
     for (size_t j = 0; j < mid; j++) {
       A11[i][j] = A[i][j];
-      A12[i][j] = A[i][j+mid];
-      A21[i][j] = A[i+mid][j];
-      A22[i][j] = A[i+mid][j+mid];
+      A12[i][j] = A[i][j + mid];
+      A21[i][j] = A[i + mid][j];
+      A22[i][j] = A[i + mid][j + mid];
       B11[i][j] = B[i][j];
-      B12[i][j] = B[i][j+mid];
-      B21[i][j] = B[i+mid][j];
-      B22[i][j] = B[i+mid][j+mid];
+      B12[i][j] = B[i][j + mid];
+      B21[i][j] = B[i + mid][j];
+      B22[i][j] = B[i + mid][j + mid];
     }
   }
 
@@ -80,8 +89,8 @@ void strassen(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
   free(T3[0]);
   free(T3);
 
-  //A22, T1, S1, S2, T2, S3, T3,
-  //P6, P3
+  // A22, T1, S1, S2, T2, S3, T3,
+  // P6, P3
   addLeft(P2, P1, mid);
   uint64_t **U1 = P2;
   addLeft(P1, P6, mid);
@@ -106,9 +115,9 @@ void strassen(uint64_t **A, uint64_t **B, uint64_t **C, size_t size) {
   for (size_t i = 0; i < mid; i++) {
     for (size_t j = 0; j < mid; j++) {
       C[i][j] = U1[i][j];
-      C[i][j+mid] = U5[i][j];
-      C[i+mid][j] = U6[i][j];
-      C[i+mid][j+mid] = U7[i][j];
+      C[i][j + mid] = U5[i][j];
+      C[i + mid][j] = U6[i][j];
+      C[i + mid][j + mid] = U7[i][j];
     }
   }
   free(U1[0]);

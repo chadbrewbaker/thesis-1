@@ -2,15 +2,32 @@
 #include "util.h"
 #include "strassen.h"
 
+#include <stdio.h>
+#include <sys/time.h>
+#include <stdlib.h>
+
+#ifndef ARRAYSIZE
+#define ARRAYSIZE 1024
+#endif
+
 int main() {
-  size_t arraySize = 1024;
+  size_t arraySize = ARRAYSIZE;
   uint64_t **A = getArray(arraySize);
   fillWithRandom(A, arraySize, 10);
   // printArray(A, arraySize);
   uint64_t **B = getArray(arraySize);
   fillWithRandom(B, arraySize, 10);
   uint64_t **C = getArray(arraySize);
-  strassen(A, B, C, arraySize);
+  struct timeval stop, start;
+  gettimeofday(&start, NULL);
+  int LOOP_COUNT = 10;
+  for (size_t i = 0; i < LOOP_COUNT; i++) {
+    strassen(A, B, C, arraySize);
+  }
+  gettimeofday(&stop, NULL);
+  unsigned long ms = ((stop.tv_sec - start.tv_sec) * 1000) +
+                     (stop.tv_usec - start.tv_usec) / 1000;
+  printf("took %lu\n", ms / LOOP_COUNT);
   // printArray(C, arraySize);
   // matrixMultiplication(A, B, C, arraySize);
   // printArray(C, arraySize);
