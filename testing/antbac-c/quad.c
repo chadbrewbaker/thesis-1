@@ -11,18 +11,18 @@
 static uint64_t *A;
 
 void constructQuad(Quad *quad) {
-  if(quad->elements > TRUNCATE * TRUNCATE) {
+  if (quad->elements > TRUNCATE * TRUNCATE) {
     int elements = quad->elements >> 2;
 
-    uint64_t* address0 = quad->matrix;
-    uint64_t* address1 = address0 + elements * 1;
-    uint64_t* address2 = address0 + elements * 2;
-    uint64_t* address3 = address0 + elements * 3;
+    uint64_t *address0 = quad->matrix;
+    uint64_t *address1 = address0 + elements * 1;
+    uint64_t *address2 = address0 + elements * 2;
+    uint64_t *address3 = address0 + elements * 3;
 
-    quad->children[0] = (Quad*) malloc(sizeof(Quad));
-    quad->children[1] = (Quad*) malloc(sizeof(Quad));
-    quad->children[2] = (Quad*) malloc(sizeof(Quad));
-    quad->children[3] = (Quad*) malloc(sizeof(Quad));
+    quad->children[0] = (Quad *)malloc(sizeof(Quad));
+    quad->children[1] = (Quad *)malloc(sizeof(Quad));
+    quad->children[2] = (Quad *)malloc(sizeof(Quad));
+    quad->children[3] = (Quad *)malloc(sizeof(Quad));
 
     quad->children[0]->matrix = address0;
     quad->children[1]->matrix = address1;
@@ -41,9 +41,9 @@ void constructQuad(Quad *quad) {
   }
 }
 
-Quad* newQuad() {
-  Quad *temp = (Quad*) malloc(sizeof(Quad));
-  uint64_t *matrix = (uint64_t*) malloc(SIZE * SIZE * sizeof(uint64_t));
+Quad *newQuad() {
+  Quad *temp = (Quad *)malloc(sizeof(Quad));
+  uint64_t *matrix = (uint64_t *)malloc(SIZE * SIZE * sizeof(uint64_t));
   temp->elements = SIZE * SIZE;
   temp->matrix = matrix;
   constructQuad(temp);
@@ -51,9 +51,9 @@ Quad* newQuad() {
 }
 
 void printAddresses(Quad *quad) {
-  if(quad->elements == TRUNCATE * TRUNCATE) {
+  if (quad->elements == TRUNCATE * TRUNCATE) {
     printf("Address : %zd\n", quad->matrix);
-  }else{
+  } else {
     printAddresses(quad->children[0]);
     printAddresses(quad->children[1]);
     printAddresses(quad->children[2]);
@@ -62,11 +62,11 @@ void printAddresses(Quad *quad) {
 }
 
 void printValues(Quad *quad) {
-  if(quad->elements == TRUNCATE * TRUNCATE) {
+  if (quad->elements == TRUNCATE * TRUNCATE) {
     for (size_t i = 0; i < quad->elements; i++) {
       printf("Value : %zd\n", quad->matrix[i]);
     }
-  }else{
+  } else {
     printValues(quad->children[0]);
     printValues(quad->children[1]);
     printValues(quad->children[2]);
@@ -78,19 +78,22 @@ void mortonify(uint64_t *original, Quad *quad, int dimensions, int x, int y) {
   if (dimensions == TRUNCATE) {
     for (size_t i = 0; i < TRUNCATE; i++) {
       for (size_t j = 0; j < TRUNCATE; j++) {
-        quad->matrix[j+i*dimensions] = original[SIZE*(y+i)+x+j];
+        quad->matrix[j + i * dimensions] = original[SIZE * (y + i) + x + j];
       }
     }
-  }else{
+  } else {
     mortonify(original, quad->children[0], dimensions >> 1, x, y);
-    mortonify(original, quad->children[1], dimensions >> 1, x + (dimensions >> 1), y);
-    mortonify(original, quad->children[2], dimensions >> 1, x, y + (dimensions >> 1));
-    mortonify(original, quad->children[3], dimensions >> 1, x + (dimensions >> 1), y + (dimensions >> 1));
+    mortonify(original, quad->children[1], dimensions >> 1,
+              x + (dimensions >> 1), y);
+    mortonify(original, quad->children[2], dimensions >> 1, x,
+              y + (dimensions >> 1));
+    mortonify(original, quad->children[3], dimensions >> 1,
+              x + (dimensions >> 1), y + (dimensions >> 1));
   }
 }
 
 int main() {
-  A = (uint64_t*) malloc(sizeof(uint64_t) * SIZE * SIZE);
+  A = (uint64_t *)malloc(sizeof(uint64_t) * SIZE * SIZE);
 
   Quad *quadA = newQuad();
 
@@ -100,8 +103,8 @@ int main() {
 
   mortonify(A, quadA, SIZE, 0, 0);
 
-  //printAddresses(quadA);
-  //printValues(quadA);
+  // printAddresses(quadA);
+  // printValues(quadA);
   for (size_t i = 0; i < SIZE * SIZE; i++) {
     printf("%lu\n", quadA->matrix[i]);
   }

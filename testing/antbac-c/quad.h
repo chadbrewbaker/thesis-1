@@ -15,7 +15,7 @@ struct Quad {
 };
 
 void constructQuad(Quad *);
-Quad* newQuad();
+Quad *newQuad();
 void printAddresses(Quad *);
 void printValues(Quad *);
 void mortonify(uint64_t *, Quad *, int, int, int);
