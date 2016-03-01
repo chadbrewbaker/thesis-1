@@ -8,8 +8,6 @@
 #define SIZE 256
 #endif
 
-static uint64_t *A;
-
 void constructQuad(Quad *quad) {
   if (quad->elements > TRUNCATE * TRUNCATE) {
     int elements = quad->elements >> 2;
@@ -92,8 +90,8 @@ void mortonify(uint64_t *original, Quad *quad, int dimensions, int x, int y) {
   }
 }
 
-int main() {
-  A = (uint64_t *)malloc(sizeof(uint64_t) * SIZE * SIZE);
+int quadTest() {
+  uint64_t *A = (uint64_t *)malloc(sizeof(uint64_t) * SIZE * SIZE);
 
   Quad *quadA = newQuad();
 
