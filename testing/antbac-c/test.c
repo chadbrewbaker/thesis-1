@@ -3,9 +3,28 @@
 
 typedef double double_32 __attribute__((aligned(32)));
 
+/* Multiply two arrays into one array */
 void fct(double_32 *__restrict r, const double_32 *__restrict a, const double_32 *__restrict b) {
   for (unsigned i = 0; i < 4; ++i)
     r[i] = a[i] * b[i];
+}
+
+/* Add the sum of an array into an address */
+void sum(double_32 *__restrict r, const double_32 *__restrict a) {
+  for (unsigned i = 0; i < 4; ++i)
+    *r += a[i];
+}
+
+/* The example from the youtube-video */
+void video(double_32 *__restrict r, const double_32 *__restrict a,
+         const double_32 *__restrict b, double f) {
+  for (unsigned i = 0; i < 128; ++i)
+    r[i] = a[i] * f + b[i];
+}
+
+/* Code to allocate an array of double_32 */
+double_32 * my_alloc(size_t elements) {
+  return (double_32 *) aligned_alloc(sizeof(double_32) * elements, 32);
 }
 
 /* prototype for asembler function */
@@ -33,6 +52,10 @@ int main() {
   for (int i = 0; i < 4; i++) {
     printf("%f\n", r[i]);
   }
+
+  /* Call the sum function */
+  sum(r, a);
+  printf("%f\n", *r);
 
   return 0;
 }
