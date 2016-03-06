@@ -2,7 +2,7 @@
 
 void strassen(my_type **A, my_type **B, my_type **C, size_t size) {
   if (size <  FIXEDSIZE * 2) {
-    matrixMultiplicationTiled(A, B, C, size);
+    // matrixMultiplicationTiled(A, B, C);
     return;
   }
   // if (size < FIXEDSIZE * 2) {

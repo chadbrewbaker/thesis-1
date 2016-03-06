@@ -8,6 +8,6 @@
 
 
 void matrixMultiplication(my_type **, my_type **, my_type **, size_t);
-void matrixMultiplicationTiled(my_type **, my_type **, my_type **, size_t);
-void matrixMultiplicationFixed(my_type **, my_type **, my_type **);
+void matrixMultiplicationTiled(my_type **, my_type **, my_type **);
+void matrixMultiplicationFixed(const my_type **, const my_type **, my_type **);
 #endif // FOO_GUARD_FOR_MYRANDOM
