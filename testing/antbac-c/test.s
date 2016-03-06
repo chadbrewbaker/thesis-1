@@ -2,6 +2,9 @@
 # Use %r for pointers and long
 # Use %e for integers
 #
+# Registers RBP, RBX, and R12 through R15 belong to the calling function
+# The called function is required to preserve their values
+#
 # Parameters
 # ----------
 # 1 : %edi
