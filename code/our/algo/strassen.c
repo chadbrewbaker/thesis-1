@@ -1,14 +1,18 @@
 #include "strassen.h"
 
 void strassen(my_type **A, my_type **B, my_type **C, size_t size) {
-  if (size <  FIXEDSIZE * 2) {
-    // matrixMultiplicationTiled(A, B, C);
-    return;
-  }
-  // if (size < FIXEDSIZE * 2) {
+  // if (size == FIXEDSIZE) {
+  //   matrixMultiplicationTiled(A, B, C);
+  //   return;
+  // }
+  // if (size == FIXEDSIZE) {
   //   matrixMultiplicationFixed(A, B, C);
   //   return;
   // }
+  if (size == FIXEDSIZE) {
+    asmMul(*A, *B, *C);
+    return;
+  }
   size_t mid = size / 2;
   my_type **A11 = getArray(mid);
   my_type **A12 = getArray(mid);

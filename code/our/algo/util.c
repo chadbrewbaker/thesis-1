@@ -2,8 +2,8 @@
 
 my_type **getArray(size_t size) {
   my_type **arr;
-  arr = (my_type **)malloc(sizeof(my_type *) * size);
-  arr[0] = (my_type *)malloc(sizeof(my_type) * size * size);
+  arr = (my_type **)aligned_alloc(32, sizeof(my_type *) * size);
+  arr[0] = (my_type *)aligned_alloc(32, sizeof(my_type) * size * size);
 
   for (size_t i = 0; i < size; i++)
     arr[i] = (*arr + size * i);
@@ -13,7 +13,7 @@ my_type **getArray(size_t size) {
 void printArray(my_type **A, size_t size) {
   for (size_t i = 0; i < size; i++) {
     for (size_t j = 0; j < size; j++) {
-      printf("%lu ", A[i][j]);
+      printf("%f ", A[i][j]);
     }
     printf("\n");
   }

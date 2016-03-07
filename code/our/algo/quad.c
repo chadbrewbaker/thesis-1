@@ -54,7 +54,7 @@ void printAddresses(Quad *quad) {
 void printValues(Quad *quad) {
   if (quad->elements == TRUNCATE * TRUNCATE) {
     for (size_t i = 0; i < quad->elements; i++) {
-      printf("Value : %zd\n", quad->matrix[i]);
+      printf("Value : %f\n", quad->matrix[i]);
     }
   } else {
     printValues(quad->children[0]);
@@ -103,7 +103,7 @@ void deMortonify(my_type *original, Quad *quad, uint32_t dimensions, uint32_t x,
 void compare(my_type *a, my_type *b) {
   for (size_t i = 0; i < ARRAYSIZE * ARRAYSIZE; i++) {
     if(a[i] != b[i]) {
-      printf("Error! i = %lu a was : %lu b was : %lu\n", i, a[i], b[i]);
+      printf("Error! i = %lu a was : %f b was : %f\n", i, a[i], b[i]);
       return;
     }
   }

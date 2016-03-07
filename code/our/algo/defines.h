@@ -7,18 +7,13 @@
 #endif
 
 #if DATATYPE == 0
-typedef uint64_t my_type __attribute__((aligned(32)));
-#elif DATATYPE == 1
-typedef uint32_t my_type __attribute__((aligned(32)));
-#elif DATATYPE == 2
-typedef float my_type __attribute__((aligned(32)));
-#elif DATATYPE == 3
 typedef double my_type __attribute__((aligned(32)));
+#elif DATATYPE == 1
+typedef float my_type __attribute__((aligned(32)));
 #endif
 
-
 #ifndef TILESIZE
-#define TILESIZE 16
+#define TILESIZE 4
 #endif
 #ifndef FIXEDSIZE
 #define FIXEDSIZE 64
