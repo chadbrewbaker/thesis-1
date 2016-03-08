@@ -3,7 +3,7 @@ int main() {
   my_type *A = (my_type *)malloc(sizeof(my_type) * ARRAYSIZE * ARRAYSIZE);
   my_type *C = (my_type *)malloc(sizeof(my_type) * ARRAYSIZE * ARRAYSIZE);
 
-  Quad *quadA = newQuad();
+  Quad *quadA = newQuad(ARRAYSIZE);
 
   for (int i = 0; i < ARRAYSIZE * ARRAYSIZE; i++) {
     A[i] = i;

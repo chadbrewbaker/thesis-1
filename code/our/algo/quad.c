@@ -1,7 +1,7 @@
 #include "quad.h"
 
 void constructQuad(Quad *quad) {
-  if (quad->elements > TRUNCATE * TRUNCATE) {
+  if (quad->elements > FIXEDSIZE * FIXEDSIZE) {
     int elements = quad->elements >> 2;
 
     my_type *address0 = quad->matrix;
@@ -31,17 +31,17 @@ void constructQuad(Quad *quad) {
   }
 }
 
-Quad *newQuad() {
+Quad *newQuad(size_t size) {
   Quad *temp = (Quad *)malloc(sizeof(Quad));
-  my_type *matrix = (my_type *)malloc(ARRAYSIZE * ARRAYSIZE * sizeof(my_type));
-  temp->elements = ARRAYSIZE * ARRAYSIZE;
+  my_type *matrix = (my_type *)malloc(size * size * sizeof(my_type));
+  temp->elements = size * size;
   temp->matrix = matrix;
   constructQuad(temp);
   return temp;
 }
 
 void printAddresses(Quad *quad) {
-  if (quad->elements == TRUNCATE * TRUNCATE) {
+  if (quad->elements == FIXEDSIZE * FIXEDSIZE) {
     printf("Address : %p\n", quad->matrix);
   } else {
     printAddresses(quad->children[0]);
@@ -52,7 +52,7 @@ void printAddresses(Quad *quad) {
 }
 
 void printValues(Quad *quad) {
-  if (quad->elements == TRUNCATE * TRUNCATE) {
+  if (quad->elements == FIXEDSIZE * FIXEDSIZE) {
     for (size_t i = 0; i < quad->elements; i++) {
       printf("Value : %f\n", quad->matrix[i]);
     }
@@ -65,9 +65,9 @@ void printValues(Quad *quad) {
 }
 
 void mortonify(my_type *original, Quad *quad, uint32_t dimensions, uint32_t x, uint32_t y) {
-  if (dimensions == TRUNCATE) {
-    for (size_t i = 0; i < TRUNCATE; i++) {
-      for (size_t j = 0; j < TRUNCATE; j++) {
+  if (dimensions == FIXEDSIZE) {
+    for (size_t i = 0; i < FIXEDSIZE; i++) {
+      for (size_t j = 0; j < FIXEDSIZE; j++) {
         quad->matrix[j + i * dimensions] = original[ARRAYSIZE * (y + i) + x + j];
       }
     }
@@ -83,9 +83,9 @@ void mortonify(my_type *original, Quad *quad, uint32_t dimensions, uint32_t x, u
 }
 
 void deMortonify(my_type *original, Quad *quad, uint32_t dimensions, uint32_t x, uint32_t y) {
-  if (dimensions == TRUNCATE) {
-    for (size_t i = 0; i < TRUNCATE; i++) {
-      for (size_t j = 0; j < TRUNCATE; j++) {
+  if (dimensions == FIXEDSIZE) {
+    for (size_t i = 0; i < FIXEDSIZE; i++) {
+      for (size_t j = 0; j < FIXEDSIZE; j++) {
         original[ARRAYSIZE * (y + i) + x + j] = quad->matrix[j + i * dimensions];
       }
     }

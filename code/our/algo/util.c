@@ -36,19 +36,19 @@ void fillWithRandom(my_type **A, size_t size, size_t limit) {
 //   }
 // }
 
-void addNew(my_type **A, my_type **B, my_type **C, size_t size) {
+void addNew(my_type *A, my_type *B, my_type *C, size_t size) {
   for (size_t i = 0; i < size*size; i++) {
-    C[0][i] = A[0][i] + B[0][i];
+    C[i] = A[i] + B[i];
   }
 }
 
-void addLeft(my_type **A, my_type **B, size_t size) {
+void addLeft(my_type *A, my_type *B, size_t size) {
   for (size_t i = 0; i < size*size; i++) {
-    A[0][i] += B[0][i];
+    A[i] += B[i];
   }
 }
 //
-// void addLeft(my_type **A, my_type **B, size_t size) {
+// void addLeft(my_type *A, my_type *B, size_t size) {
 //   for (size_t i = 0; i < size; i++) {
 //     for (size_t j = 0; j < size; j++) {
 //       A[i][j] += B[i][j];
@@ -56,7 +56,7 @@ void addLeft(my_type **A, my_type **B, size_t size) {
 //   }
 // }
 
-// void subNew(my_type **A, my_type **B, my_type **C, size_t size) {
+// void subNew(my_type *A, my_type *B, my_type *C, size_t size) {
 //   for (size_t i = 0; i < size; i++) {
 //     for (size_t j = 0; j < size; j++) {
 //       C[i][j] = A[i][j] - B[i][j];
@@ -64,19 +64,19 @@ void addLeft(my_type **A, my_type **B, size_t size) {
 //   }
 // }
 
-void subNew(my_type **A, my_type **B, my_type **C, size_t size) {
+void subNew(my_type *A, my_type *B, my_type *C, size_t size) {
   for (size_t i = 0; i < size*size; i++) {
-    C[0][i] = A[0][i] - B[0][i];
+    C[i] = A[i] - B[i];
   }
 }
 
-void subLeft(my_type **A, my_type **B, size_t size) {
+void subLeft(my_type *A, my_type *B, size_t size) {
   for (size_t i = 0; i < size*size; i++) {
-    A[0][i] -= B[0][i];
+    A[i] -= B[i];
   }
 }
 
-// void subLeft(my_type **A, my_type **B, size_t size) {
+// void subLeft(my_type *A, my_type *B, size_t size) {
 //   for (size_t i = 0; i < size; i++) {
 //     for (size_t j = 0; j < size; j++) {
 //       A[i][j] -= B[i][j];
@@ -84,7 +84,7 @@ void subLeft(my_type **A, my_type **B, size_t size) {
 //   }
 // }
 
-// void subRight(my_type **A, my_type **B, size_t size) {
+// void subRight(my_type *A, my_type *B, size_t size) {
 //   for (size_t i = 0; i < size; i++) {
 //     for (size_t j = 0; j < size; j++) {
 //       B[i][j] = A[i][j] - B[i][j];
@@ -93,8 +93,8 @@ void subLeft(my_type **A, my_type **B, size_t size) {
 // }
 
 
-void subRight(my_type **A, my_type **B, size_t size) {
+void subRight(my_type *A, my_type *B, size_t size) {
   for (size_t i = 0; i < size*size; i++) {
-    B[0][i] = A[0][i] - B[0][i];
+    B[i] = A[i] - B[i];
   }
 }
