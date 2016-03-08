@@ -9,8 +9,14 @@ void fct(double_32 *__restrict r, const double_32 *__restrict a, const double_32
     r[i] = a[i] * b[i];
 }
 
+/* Takes a pointer to an integer and shifts the value 2 to the right */
+void shift(int *i) {
+  *i = *i >> 2;
+}
+
 /* Add the sum of an array into an address */
 void sum(double_32 *__restrict r, const double_32 *__restrict a) {
+  *r = 0; 
   for (unsigned i = 0; i < 4; ++i)
     *r += a[i];
 }

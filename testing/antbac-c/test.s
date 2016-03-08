@@ -1,25 +1,3 @@
-# Notes:
-# Use %r for pointers and long
-# Use %e for integers
-#
-# Registers RBP, RBX, and R12 through R15 belong to the calling function
-# The called function is required to preserve their values
-#
-# Parameters
-# ----------
-# 1 : %edi
-# 2 : %esi
-# 3 : %edx
-# 4 : %ecx
-# 5 : %r8
-# 6 : %r9
-#
-# %xmm0-7 (128 bit, lower half of ymmX)
-# %ymm0-7 (256 bit)
-#
-# Return : %eax for an int or %rax for a long
-#
-
 .section .text
 .globl vec_mul
 .type vec_mul, @function
