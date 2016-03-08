@@ -13,7 +13,9 @@ int main() {
   deMortonify(C, quadA, ARRAYSIZE, 0, 0);
 
   compare(A, C);
-
+  free(A);
+  free(C);
+  freeQuad(quadA);
   // printAddresses(quadA);
   // printValues(quadA);
   /*

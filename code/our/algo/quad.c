@@ -31,6 +31,34 @@ void constructQuad(Quad *quad) {
   }
 }
 
+void freeQuad(Quad *quad) {
+  if (quad->elements > FIXEDSIZE * FIXEDSIZE) {
+    freeQuadRecursive(quad->children[0]);
+    freeQuadRecursive(quad->children[1]);
+    freeQuadRecursive(quad->children[2]);
+    freeQuadRecursive(quad->children[3]);
+    free(quad->children[0]);
+    free(quad->children[1]);
+    free(quad->children[2]);
+    free(quad->children[3]);
+  }
+  free(quad->matrix);
+  free(quad);
+}
+
+void freeQuadRecursive(Quad *quad) {
+  if (quad->elements > FIXEDSIZE * FIXEDSIZE) {
+    freeQuadRecursive(quad->children[0]);
+    freeQuadRecursive(quad->children[1]);
+    freeQuadRecursive(quad->children[2]);
+    freeQuadRecursive(quad->children[3]);
+    free(quad->children[0]);
+    free(quad->children[1]);
+    free(quad->children[2]);
+    free(quad->children[3]);
+  }
+}
+
 Quad *newQuad(size_t size) {
   Quad *temp = (Quad *)malloc(sizeof(Quad));
   my_type *matrix = (my_type *)malloc(size * size * sizeof(my_type));

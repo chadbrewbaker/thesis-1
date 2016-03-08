@@ -14,6 +14,8 @@ struct Quad {
   struct Quad *children[4];
 };
 
+void freeQuad(Quad *quad);
+void freeQuadRecursive(Quad *quad);
 void constructQuad(Quad *);
 Quad *newQuad(size_t);
 void printAddresses(Quad *);
