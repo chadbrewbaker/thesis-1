@@ -16,8 +16,8 @@ int main() {
   fillWithRandom(B, arraySize, 10);
   my_type **C = getArray(arraySize);
   struct timeval stop, start;
-  gettimeofday(&start, NULL);
   size_t LOOP_COUNT = 1;
+  gettimeofday(&start, NULL);
   for (size_t i = 0; i < LOOP_COUNT; i++) {
     strassen(A, B, C, arraySize);
   }
@@ -25,6 +25,7 @@ int main() {
   unsigned long ms = ((stop.tv_sec - start.tv_sec) * 1000) +
                      (stop.tv_usec - start.tv_usec) / 1000;
   printf("took %lu\n", ms / LOOP_COUNT);
+
   // printArray(C, arraySize);
   // matrixMultiplication(A, B, C, arraySize);
   // printArray(C, arraySize);
@@ -38,5 +39,27 @@ int main() {
   free(B);
   free(C[0]);
   free(C);
+
+
+
+
+  Quad *quadA = newQuad(ARRAYSIZE);
+  Quad *quadB = newQuad(ARRAYSIZE);
+  Quad *quadC = newQuad(ARRAYSIZE);
+
+  gettimeofday(&start, NULL);
+  // size_t LOOP_COUNT = 1;
+  for (size_t i = 0; i < LOOP_COUNT; i++) {
+    strassenQuad(quadA, quadB, quadC, arraySize);
+  }
+  gettimeofday(&stop, NULL);
+  ms = ((stop.tv_sec - start.tv_sec) * 1000) +
+                     (stop.tv_usec - start.tv_usec) / 1000;
+  printf("took %lu\n", ms / LOOP_COUNT);
+
+  freeQuad(quadA);
+  freeQuad(quadB);
+  freeQuad(quadC);
+
   return 0;
 }

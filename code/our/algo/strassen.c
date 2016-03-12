@@ -141,6 +141,8 @@ void strassenQuad(Quad *A, Quad *B, Quad *C, size_t size) {
   //   return;
   // }
   if (size == FIXEDSIZE) {
+    // printf("Doing asmMul\n");
+    // printf("%p, %p, %p\n", A->matrix, B->matrix, C->matrix);
     asmMul(A->matrix, B->matrix, C->matrix);
     return;
   }
@@ -154,106 +156,74 @@ void strassenQuad(Quad *A, Quad *B, Quad *C, size_t size) {
   Quad *B21 = B->children[2];
   Quad *B22 = B->children[3];
 
-  Quad *S1 = B->children[0];
-  Quad *S2 = B->children[1];
+  Quad *T3 = C->children[0];
+  subNew(B22->matrix, B12->matrix, T3->matrix, mid);
 
-  addNew(A21->matrix, A22->matrix, S1->matrix, mid);
-  subNew(S1->matrix, A11->matrix, S2->matrix, mid);
+  Quad *S3 = C->children[1];
+  subNew(A11->matrix, A21->matrix, S3->matrix, mid);
 
-  subRight(A11->matrix, A21->matrix, mid);
-  Quad *S3 = A21;
+  Quad *P7 = C->children[3];
+  strassenQuad(S3, T3, P7, mid);
 
-  Quad *P1 = B->children[2];
-  strassenQuad(A11, B11, P1, mid);
-  Quad *T1 = A11;
+  Quad *T1 = newQuad(mid);
   subNew(B12->matrix, B11->matrix, T1->matrix, mid);
 
-  Quad *T2 = B->children[3];
-  subNew(B22->matrix, T1->matrix, T2->matrix, mid);
+  Quad *S1 = newQuad(mid);
+  addNew(A21->matrix, A22->matrix, S1->matrix, mid);
 
-  subRight(B22->matrix, B12->matrix, mid);
-  Quad *T3 = B12;
+  Quad *P5 = C->children[0];
+  strassenQuad(S1, T1, P5, mid);
 
-  Quad *S4 = newQuad(mid);
-  Quad *T4 = newQuad(mid);
-  subNew(A12->matrix, S2->matrix, S4->matrix, mid);
+  subLeft(S1->matrix, A11->matrix, mid);
+  Quad *S2 = S1;
+
+  subRight(B22->matrix, T1->matrix, mid);
+  Quad *T2 = T1;
+
+  Quad *T4 = C->children[1];
   subNew(T2->matrix, B21->matrix, T4->matrix, mid);
 
-  strassenQuad(A12, B21, B11, mid);
-  Quad *P2 = B11;
-  strassenQuad(S4, B22, B21, mid);
-  Quad *P3 = B21;
-  strassenQuad(A22, T4, A12, mid);
-  // free(A22[0]);
-  // free(A22);
-  Quad *P4 = A12;
-  strassenQuad(S1, T1, S4, mid);
-  // free(T1[0]);
-  // free(T1);
-  // free(S1[0]);
-  // free(S1);
-  Quad *P5 = S4;
-  strassenQuad(S2, T2, B22, mid);
-  // free(S2[0]);
-  // free(S2);
-  // free(T2[0]);
-  // free(T2);
-  Quad *P6 = B22;
-  strassenQuad(S3, T3, T4, mid);
-  Quad *P7 = T4;
-  // free(S3[0]);
-  // free(S3);
-  // free(T3[0]);
-  // free(T3);
+  Quad *P4 = C->children[2];
+  strassenQuad(A22, T4, P4, mid);
 
-  // A22, T1, S1, S2, T2, S3, T3,
-  // P6, P3
-  addLeft(P2->matrix, P1->matrix, mid);
-  Quad *U1 = P2;
-  addLeft(P1->matrix, P6->matrix, mid);
-  // free(P6[0]);
-  // free(P6);
-  Quad *U2 = P1;
+  strassenQuad(S2, T2, T4, mid);
+  Quad *P6 = T4;
+
+  subRight(A12->matrix, S2->matrix, mid);
+  Quad *S4 = S2;
+
+  strassenQuad(S4, B22, T2, mid);
+  Quad *P3 = T2;
+
+  strassenQuad(A11, B11, S4, mid);
+  Quad *P1 = S4;
+
+  addLeft(P6->matrix, P1->matrix, mid);
+  Quad *U2 = P6;
+
   addLeft(P7->matrix, U2->matrix, mid);
   Quad *U3 = P7;
+
   addLeft(U2->matrix, P5->matrix, mid);
   Quad *U4 = U2;
-  addLeft(U4->matrix, P3->matrix, mid);
-  // free(P3[0]);
-  // free(P3);
-  Quad *U5 = U4;
+
   subRight(U3->matrix, P4->matrix, mid);
   Quad *U6 = P4;
+
   addLeft(U3->matrix, P5->matrix, mid);
   Quad *U7 = U3;
-  // free(P5[0]);
-  // free(P5);
-  //
 
-  C->children[0] = U1;
-  C->children[1] = U5;
-  C->children[2] = U6;
-  C->children[3] = U7;
+  strassenQuad(A12, B21, P5, mid);
+  Quad *P2 = P5;
 
+  addLeft(P2->matrix, P1->matrix, mid);
+  Quad *U1 = P2;
 
-  // 1 5
-  // 6 7
-  // for (size_t i = 0; i < mid; i++) {
-  //   for (size_t j = 0; j < mid; j++) {
-  //     C[i][j] = U1[i][j];
-  //     C[i][j + mid] = U5[i][j];
-  //     C[i + mid][j] = U6[i][j];
-  //     C[i + mid][j + mid] = U7[i][j];
-  //   }
-  // }
-  // free(U1[0]);
-  // free(U1);
-  // free(U5[0]);
-  // free(U5);
-  // free(U6[0]);
-  // free(U6);
-  // free(U7[0]);
-  // free(U7);
+  addLeft(U4->matrix, P3->matrix, mid);
+  Quad *U5 = U4;
+
+  freeQuad(P3);
+  freeQuad(P1);
 
   return;
 }

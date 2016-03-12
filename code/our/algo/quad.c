@@ -60,8 +60,8 @@ void freeQuadRecursive(Quad *quad) {
 }
 
 Quad *newQuad(size_t size) {
-  Quad *temp = (Quad *)malloc(sizeof(Quad));
-  my_type *matrix = (my_type *)malloc(size * size * sizeof(my_type));
+  Quad *temp = (Quad *)aligned_alloc(32, sizeof(Quad));
+  my_type *matrix = (my_type *)aligned_alloc(32, size * size * sizeof(my_type));
   temp->elements = size * size;
   temp->matrix = matrix;
   constructQuad(temp);
