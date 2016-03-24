@@ -1,18 +1,22 @@
 #include "strassen.h"
 
 void strassen(my_type **A, my_type **B, my_type **C, size_t size) {
-  // if (size == FIXEDSIZE) {
-  //   matrixMultiplicationTiled(A, B, C, size);
-  //   return;
-  // }
+  if (size == FIXEDSIZE) {
+    // matrixMultiplicationTiled(A, B, C, size);
+    return;
+  }
   // if (size == FIXEDSIZE) {
   //   matrixMultiplicationFixed(A, B, C);
   //   return;
   // }
-  if (size == FIXEDSIZE) {
-    asmMul(*A, *B, *C);
-    return;
-  }
+  // if (size == FIXEDSIZE) {
+  //   asmMul(*A, *B, *C);
+  //   return;
+  // }
+  // if (size == FIXEDSIZE) {
+  //   asmMul32(*A, *B, *C);
+  //   return;
+  // }
   size_t mid = size / 2;
   my_type **A11 = getArray(mid);
   my_type **A12 = getArray(mid);
@@ -141,11 +145,20 @@ void strassenQuad(Quad *A, Quad *B, Quad *C, size_t size) {
   //   return;
   // }
   if (size == FIXEDSIZE) {
-    // printf("Doing asmMul\n");
-    // printf("%p, %p, %p\n", A->matrix, B->matrix, C->matrix);
-    asmMul(A->matrix, B->matrix, C->matrix);
+    #if FIXEDSIZE == 32
+      asmMul32(A->matrix, B->matrix, C->matrix);
+    #elif FIXEDSIZE == 64
+      // printf("64\n");
+      asmMul(A->matrix, B->matrix, C->matrix);
+    #elif FIXEDSIZE == 128
+      // printf("128\n");
+      asmMul128(A->matrix, B->matrix, C->matrix);
+    #endif
     return;
   }
+  // if (size == FIXEDSIZE) {
+  //   return;
+  // }
   size_t mid = size / 2;
   Quad *A11 = A->children[0];
   Quad *A12 = A->children[1];

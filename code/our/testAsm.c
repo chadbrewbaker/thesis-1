@@ -22,7 +22,7 @@ int main() {
   // a[0] = 2;
   matrixMultiplication(A, B, D, arraySize);
   printf("before ASM\n");
-  asmMul(*A, *B, *C);
+  asmMul32(*A, *B, *C);
   printf("after ASM\n");
   for (size_t i = 0; i < 16; i++) {
     for (size_t j = 0; j < 16; j++) {
@@ -60,8 +60,8 @@ int main() {
   printf("\n");
   printf("\n");
   printf("\n");
-  for (size_t i = 0; i < 64; i++) {
-    for (size_t j = 0; j < 64; j++) {
+  for (size_t i = 0; i < 32; i++) {
+    for (size_t j = 0; j < 32; j++) {
       if (D[i][j] != C[i][j]) {
         printf("ERROR at %lu and %lu %.0f != %.0f \n", i, j, D[i][j],C[i][j]);
       }

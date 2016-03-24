@@ -13,10 +13,10 @@ typedef float my_type __attribute__((aligned(32)));
 #endif
 
 #ifndef TILESIZE
-#define TILESIZE 4
+#define TILESIZE 64
 #endif
 #ifndef FIXEDSIZE
-#define FIXEDSIZE 64
+#define FIXEDSIZE 128
 #endif
 
 // truncate and fixedsize needs to be the same value

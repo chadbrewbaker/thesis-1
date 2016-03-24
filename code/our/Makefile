@@ -18,7 +18,7 @@ print_flags:
 
 
 $%.c: $(FILES) $(ASM) $(HEADERS) $^
-	$(CC) $(FLAGS) $^ $(FILES) $(ASM) -o $@.out
+	$(CC) $(FLAGS) $^ $(FILES) $(ASM) $(CPPFLAGS) -o $@.out
 	# @echo $(CC) $(FLAGS) $^ $(FILES) -o $@
 
 clean:
