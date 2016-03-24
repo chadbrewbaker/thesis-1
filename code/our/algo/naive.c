@@ -26,10 +26,11 @@ void matrixMultiplicationFixed(my_type const **__restrict A, my_type const **__r
   return;
 }
 
-void matrixMultiplicationTiled(my_type **A, my_type **B, my_type **C) {
-  for (size_t i = 0; i < FIXEDSIZE; i += TILESIZE) {
-    for (size_t j = 0; j < FIXEDSIZE; j += TILESIZE) {
-      for (size_t k = 0; k < FIXEDSIZE; k++) {
+void matrixMultiplicationTiled(my_type **A, my_type **B, my_type **C,
+                               size_t size) {
+  for (size_t i = 0; i < size; i += TILESIZE) {
+    for (size_t j = 0; j < size; j += TILESIZE) {
+      for (size_t k = 0; k < size; k++) {
         for (size_t x = i; x < i + TILESIZE; x++) {
           for (size_t y = j; y < j + TILESIZE; y++) {
             C[x][y] += A[x][k] * B[k][y];
