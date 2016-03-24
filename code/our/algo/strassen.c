@@ -2,7 +2,7 @@
 
 void strassen(my_type **A, my_type **B, my_type **C, size_t size) {
   // if (size == FIXEDSIZE) {
-  //   matrixMultiplicationTiled(A, B, C);
+  //   matrixMultiplicationTiled(A, B, C, size);
   //   return;
   // }
   // if (size == FIXEDSIZE) {
@@ -133,7 +133,7 @@ void strassen(my_type **A, my_type **B, my_type **C, size_t size) {
 
 void strassenQuad(Quad *A, Quad *B, Quad *C, size_t size) {
   // if (size == FIXEDSIZE) {
-  //   matrixMultiplicationTiled(A, B, C);
+  //   matrixMultiplicationTiled(A, B, C, size);
   //   return;
   // }
   // if (size == FIXEDSIZE) {

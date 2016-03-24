@@ -20,7 +20,7 @@ int main() {
   // printArray(C, arraySize);
   my_type **D = getArray(arraySize);
   matrixMultiplicationTiled(A, B, D, arraySize);
-  printf("%lu\n", D[0][0]);
+  printf("%f\n", D[0][0]);
   // printArray(D, arraySize);
   return 0;
 }
