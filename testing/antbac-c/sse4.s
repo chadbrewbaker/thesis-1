@@ -3,6 +3,8 @@
 .type transpose_2_2_double, @function
 .globl transpose_4_4_float
 .type transpose_4_4_float, @function
+.globl matrix_mul_4_4_float
+.type matrix_mul_4_4_float, @function
 
 transpose_2_2_double:
 movapd 0x00(%rdi), %xmm0
@@ -37,4 +39,68 @@ movaps %xmm0, 0x00(%rdi)
 movaps %xmm1, 0x10(%rdi)
 movaps %xmm2, 0x20(%rdi)
 movaps %xmm3, 0x30(%rdi)
+ret
+
+matrix_mul_4_4_float:
+# Store the b-matrix in xmm registers 4-7
+movaps 0x00(%rsi), %xmm4
+movaps 0x10(%rsi), %xmm5
+movaps 0x20(%rsi), %xmm6
+movaps 0x30(%rsi), %xmm7
+
+# Calculate row 1
+movaps (%rdi), %xmm0
+movaps (%rdi), %xmm1
+movaps (%rdi), %xmm2
+movaps (%rdi), %xmm3
+dpps $0xF1, %xmm4, %xmm0
+dpps $0xF1, %xmm5, %xmm1
+dpps $0xF1, %xmm6, %xmm2
+dpps $0xF1, %xmm7, %xmm3
+movss %xmm0, 0x0(%rdx)
+movss %xmm1, 0x4(%rdx)
+movss %xmm2, 0x8(%rdx)
+movss %xmm3, 0xC(%rdx)
+
+# Calculate row 2
+movaps 0x10(%rdi), %xmm0
+movaps 0x10(%rdi), %xmm1
+movaps 0x10(%rdi), %xmm2
+movaps 0x10(%rdi), %xmm3
+dpps $0xF1, %xmm4, %xmm0
+dpps $0xF1, %xmm5, %xmm1
+dpps $0xF1, %xmm6, %xmm2
+dpps $0xF1, %xmm7, %xmm3
+movss %xmm0, 0x10(%rdx)
+movss %xmm1, 0x14(%rdx)
+movss %xmm2, 0x18(%rdx)
+movss %xmm3, 0x1C(%rdx)
+
+# Calculate row 3
+movaps 0x20(%rdi), %xmm0
+movaps 0x20(%rdi), %xmm1
+movaps 0x20(%rdi), %xmm2
+movaps 0x20(%rdi), %xmm3
+dpps $0xF1, %xmm4, %xmm0
+dpps $0xF1, %xmm5, %xmm1
+dpps $0xF1, %xmm6, %xmm2
+dpps $0xF1, %xmm7, %xmm3
+movss %xmm0, 0x20(%rdx)
+movss %xmm1, 0x24(%rdx)
+movss %xmm2, 0x28(%rdx)
+movss %xmm3, 0x2C(%rdx)
+
+# Calculate row 4
+movaps 0x30(%rdi), %xmm0
+movaps 0x30(%rdi), %xmm1
+movaps 0x30(%rdi), %xmm2
+movaps 0x30(%rdi), %xmm3
+dpps $0xF1, %xmm4, %xmm0
+dpps $0xF1, %xmm5, %xmm1
+dpps $0xF1, %xmm6, %xmm2
+dpps $0xF1, %xmm7, %xmm3
+movss %xmm0, 0x30(%rdx)
+movss %xmm1, 0x34(%rdx)
+movss %xmm2, 0x38(%rdx)
+movss %xmm3, 0x3C(%rdx)
 ret
