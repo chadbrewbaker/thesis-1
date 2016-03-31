@@ -1,6 +1,8 @@
 .section .text
 .globl transpose_2_2_double
 .type transpose_2_2_double, @function
+.globl matrix_mul_2_2_double
+.type matrix_mul_2_2_double, @function
 .globl transpose_4_4_float
 .type transpose_4_4_float, @function
 .globl matrix_mul_4_4_float
@@ -14,6 +16,28 @@ unpcklpd %xmm2, %xmm0
 unpckhpd %xmm2, %xmm1
 movapd %xmm0, 0x00(%rdi)
 movapd %xmm1, 0x10(%rdi)
+ret
+
+matrix_mul_2_2_double:
+# Store the b-matrix in xmm registers 4-7
+movapd 0x00(%rsi), %xmm2
+movapd 0x10(%rsi), %xmm3
+
+# Calculate row 1
+movapd 0x00(%rdi), %xmm0
+movapd 0x00(%rdi), %xmm1
+dppd $0xF1, %xmm2, %xmm0
+dppd $0xF1, %xmm3, %xmm1
+movsd %xmm0, 0x0(%rdx)
+movsd %xmm1, 0x8(%rdx)
+
+# Calculate row 2
+movapd 0x10(%rdi), %xmm0
+movapd 0x10(%rdi), %xmm1
+dppd $0xF1, %xmm2, %xmm0
+dppd $0xF1, %xmm3, %xmm1
+movsd %xmm0, 0x10(%rdx)
+movsd %xmm1, 0x18(%rdx)
 ret
 
 transpose_4_4_float:

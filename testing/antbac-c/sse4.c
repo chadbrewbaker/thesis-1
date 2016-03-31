@@ -1,25 +1,22 @@
 #include "header.h"
 
-typedef double double_32 __attribute__((aligned(32)));
-
-/* Code to allocate an array of double_32 */
-double_32 * my_alloc_d(size_t elements) {
-  return (double_32 *) aligned_alloc(32, sizeof(double_32) * elements);
+/* Generate a 2x2 double_32 matrix */
+double_32 * double_matrix() {
+  double_32 *ret = (double_32 *) aligned_alloc(32, sizeof(double_32) * 4);
+  for(size_t i = 0; i < 4; i++){
+    ret[i] = (rand() % 100)+1;
+  }
+  return ret;
 }
 
-/* Code to allocate an array of float_32 */
-float_32 * my_alloc_f(size_t elements) {
-  return (float_32 *) aligned_alloc(32, sizeof(float_32) * elements);
+/* Print the contents of two 2x2 double_32 matrices */
+void print_d_2(const double_32 *__restrict a, const double_32 *__restrict b) {
+    printf("%f\t%f\t|\t%f\t%f\n", a[0], a[1], b[0], b[1]);
+    printf("%f\t%f\t|\t%f\t%f\n", a[2], a[3], b[2], b[3]);
+    printf("\n");
 }
 
-double_32 sum(const double_32 *__restrict a, const double_32 *__restrict b) {
-  return a[0] + a[1] + b[0] + b[1];
-}
-
-double_32 naive(const double_32 *__restrict a, const double_32 *__restrict b) {
-  return a[0] + a[1] + b[0] + b[1];
-}
-
+/* Print the contents of a 2x2 double_32 matrix */
 void print_d(const double_32 *__restrict a) {
   for(size_t y = 0; y < 2; y++){
     for(size_t x = 0; x < 2; x++){
@@ -30,100 +27,67 @@ void print_d(const double_32 *__restrict a) {
   printf("\n");
 }
 
-void print_f(const float_32 *__restrict a) {
-  for(size_t y = 0; y < 4; y++){
-    for(size_t x = 0; x < 4; x++){
-      printf("%f\t", a[x+4*y]);
-    }
-    printf("\n");
+/* Perform tests on a 2x2 double_32 matrix */
+void run_d() {
+  double_32 *a = double_matrix();
+  double_32 *b = double_matrix();
+  double_32 *r = double_matrix();
+  printf("Double 2x2:\n-----------\n");
+  print_d_2(a, b);
+  transpose_2_2_double(b);
+  matrix_mul_2_2_double(a, b, r);
+  print_d(r);
+  printf("\n\n");
+  free(a);
+  free(b);
+  free(r);
+}
+
+/* Generate a 4x4 float_32 matrix */
+float_32 * float_matrix() {
+  float_32 *ret = (float_32 *) aligned_alloc(32, sizeof(float_32) * 16);
+  for(size_t i = 0; i < 16; i++){
+    ret[i] = (rand() % 100)+1;
   }
+  return ret;
+}
+
+/* Print the contents of two 2x2 double_32 matrices */
+void print_f_2(const float_32 *__restrict a, const float_32 *__restrict b) {
+    printf("%f\t%f\t%f\t%f\t|\t%f\t%f\t%f\t%f\t\n", a[0], a[1], a[2], a[3], b[0], b[1], b[2], b[3]);
+    printf("%f\t%f\t%f\t%f\t|\t%f\t%f\t%f\t%f\t\n", a[4], a[5], a[6], a[7], b[4], b[5], b[6], b[7]);
+    printf("%f\t%f\t%f\t%f\t|\t%f\t%f\t%f\t%f\t\n", a[8], a[9], a[10], a[11], b[8], b[9], b[10], b[11]);
+    printf("%f\t%f\t%f\t%f\t|\t%f\t%f\t%f\t%f\t\n", a[12], a[13], a[14], a[15], b[12], b[13], b[14], b[15]);
+    printf("\n");
+}
+
+/* Print the contents of a 4x4 float_32 matrix */
+void print_f(const float_32 *__restrict a) {
+  printf("%f\t%f\t%f\t%f\n", a[0], a[1], a[2], a[3]);
+  printf("%f\t%f\t%f\t%f\n", a[4], a[5], a[6], a[7]);
+  printf("%f\t%f\t%f\t%f\n", a[8], a[9], a[10], a[11]);
+  printf("%f\t%f\t%f\t%f\n", a[12], a[13], a[14], a[15]);
   printf("\n");
 }
 
-void assign_f(float_32 *__restrict a) {
-  for(size_t y = 0; y < 4; y++){
-    for(size_t x = 0; x < 4; x++){
-      a[x+4*y] = x+10*y;
-    }
-  }
-}
-
-void assign_d(double_32 *__restrict a) {
-  for(size_t y = 0; y < 2; y++){
-    for(size_t x = 0; x < 2; x++){
-      a[x+2*y] = x+10*y;
-    }
-  }
-}
-
-void run_f(float_32 *__restrict a) {
-  printf("Float 4x4:\n----------\n");
-  print_f(a);
-  transpose_4_4_float(a);
-  print_f(a);
+/* Perform tests on a 4x4 float_32 matrix */
+void run_f() {
+  float_32 *a = float_matrix();
+  float_32 *b = float_matrix();
+  float_32 *r = float_matrix();
+  printf("Float 4x4:\n-----------\n");
+  print_f_2(a, b);
+  transpose_4_4_float(b);
+  matrix_mul_4_4_float(a, b, r);
+  print_f(r);
   printf("\n\n");
-}
-
-void run_d(double_32 *__restrict a) {
-  printf("Double 2x2:\n-----------\n");
-  print_d(a);
-  transpose_2_2_double(a);
-  print_d(a);
-  printf("\n\n");
+  free(a);
+  free(b);
+  free(r);
 }
 
 int main(int argc, char const *argv[]) {
-  float_32 *matr_f = my_alloc_f(4*4);
-  assign_f(matr_f);
-  run_f(matr_f);
-
-  double_32 *matr_d = my_alloc_d(2*2);
-  assign_d(matr_d);
-  run_d(matr_d);
-
-  return 0;
+  srand(time(0));
+  run_d();
+  run_f();
 }
-/*
-unpckhpd %xmm1, %xmm0 :
-
-INTERLEAVE_HIGH_QWORDS(src1[127:0], src2[127:0]){
- dst[63:0] := src1[127:64]
- dst[127:64] := src2[127:64]
- RETURN dst[127:0]
-}
-
-In:             Out:
-xmm0 = 1, 2     2, 17
-xmm1 = 11, 17
-*/
-
-/*
-unpcklpd %xmm1, %xmm0 :
-
-INTERLEAVE_LOW_QWORDS(src1[127:0], src2[127:0]){
- dst[63:0] := src1[63:0]
- dst[127:64] := src2[63:0]
- RETURN dst[127:0]
-}
-
-In:             Out:
-xmm0 = 1, 2     1, 11
-xmm1 = 11, 17
-*/
-
-/*
-shufpd imm8, %xmm1, %xmm0 :
-
-Shuffle_double_precision(imm8, src1[127:0], src2[127:0]){
-  if imm8[0] = 0 then dst[63:0] := a[63:0]
-  else dst[63:0] := a[127:64]
-  if imm8[1] = 0 then dst[127:64] := b[63:0]
-  else dst[127:64] := b[127:64]
-  RETURN dst[127:0]
-}
-
-In:             Out:
-imm8 = 0b10     1, 17
-xmm0 = 1, 2
-xmm1 = 11, 17
-*/
