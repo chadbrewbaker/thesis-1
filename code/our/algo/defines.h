@@ -5,6 +5,8 @@
 #ifndef DATATYPE
 #define DATATYPE 0
 #endif
+typedef double d32 __attribute__((aligned(32)));
+typedef float f32 __attribute__((aligned(32)));
 
 #if DATATYPE == 0
 typedef double my_type __attribute__((aligned(32)));

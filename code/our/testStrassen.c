@@ -16,11 +16,11 @@ int main() {
   fillWithRandom(B, arraySize, 10);
   my_type **C = getArray(arraySize);
   struct timeval stop, start;
-  size_t LOOP_COUNT = 1;
+  size_t LOOP_COUNT = 20;
   gettimeofday(&start, NULL);
-  for (size_t i = 0; i < LOOP_COUNT; i++) {
-    strassen(A, B, C, arraySize);
-  }
+  // for (size_t i = 0; i < LOOP_COUNT; i++) {
+  //   strassen(A, B, C, arraySize);
+  // }
   gettimeofday(&stop, NULL);
   unsigned long ms = ((stop.tv_sec - start.tv_sec) * 1000) +
                      (stop.tv_usec - start.tv_usec) / 1000;

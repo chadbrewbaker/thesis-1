@@ -16,13 +16,20 @@ int main() {
   // my_type *a = *A;
   // my_type *b = *B;
   // for (size_t i = 0; i < FIXEDSIZE*FIXEDSIZE; i++) {
-  //   a[i] = i;
-  //   b[i] = i;
+  //   a[i] = (i%FIXEDSIZE + 1)%16;
+  //   b[i] = 1;
   // }
-  // a[0] = 2;
-  matrixMultiplication(A, B, D, arraySize);
+  // for (size_t i = 0; i < 32; i++) {
+  //   for (size_t j = 0; j < 32; j++) {
+  //     A[i][j] = j;
+  //     B[i][j] = j;
+  //   }
+  // }
+  // B[3][4] = 3000;
+  matrixMultiplicationTiled(A, B, D, arraySize);
   printf("before ASM\n");
-  asmMul32(*A, *B, *C);
+  asmMulF64(*A, *B, *C);
+  // asmMul(*A, *B, *C);
   printf("after ASM\n");
   for (size_t i = 0; i < 16; i++) {
     for (size_t j = 0; j < 16; j++) {
@@ -60,13 +67,13 @@ int main() {
   printf("\n");
   printf("\n");
   printf("\n");
-  for (size_t i = 0; i < 32; i++) {
-    for (size_t j = 0; j < 32; j++) {
-      if (D[i][j] != C[i][j]) {
-        printf("ERROR at %lu and %lu %.0f != %.0f \n", i, j, D[i][j],C[i][j]);
-      }
-    }
-  }
+  // for (size_t i = 0; i < 32; i++) {
+  //   for (size_t j = 0; j < 32; j++) {
+  //     if (D[i][j] != C[i][j]) {
+  //       printf("ERROR at %lu and %lu %.0f != %.0f \n", i, j, D[i][j],C[i][j]);
+  //     }
+  //   }
+  // }
   // printf("%.0f, ", C[1][0]);
   // printf("%.0f\n", C[1][1]);
   // printArray(D, arraySize);
