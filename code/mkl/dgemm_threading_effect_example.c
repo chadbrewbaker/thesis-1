@@ -26,7 +26,7 @@
 /*******************************************************************************
 *   This example demonstrates threading impact on computing real matrix product
 *   C=alpha*A*B+beta*C using Intel(R) MKL subroutine DGEMM, where A, B, and C
-*   are matrices and alpha and beta are double precision scalars.
+*   are matrices and alpha and beta are float precision scalars.
 *
 *   In this simple example, practices such as memory management, data alignment,
 *   and I/O that are necessary for good programming style and high MKL
@@ -43,14 +43,14 @@
 
 int main()
 {
-    double *A, *B, *C;
+    float *A, *B, *C;
     int m, n, p, i, j, r, max_threads;
-    double alpha, beta;
-    double s_initial, s_elapsed;
+    float alpha, beta;
+    float s_initial, s_elapsed;
 
     printf ("\n This example demonstrates threading impact on computing real matrix product \n"
             " C=alpha*A*B+beta*C using Intel(R) MKL function dgemm, where A, B, and C are \n"
-            " matrices and alpha and beta are double precision scalars \n\n");
+            " matrices and alpha and beta are float precision scalars \n\n");
 
     m = 1024, p = 1024, n = 1024;
     printf (" Initializing data for matrix multiplication C=A*B for matrix \n"
@@ -59,9 +59,9 @@ int main()
 
     printf (" Allocating memory for matrices aligned on 64-byte boundary for better \n"
             " performance \n\n");
-    A = (double *)mkl_malloc( m*p*sizeof( double ), 64 );
-    B = (double *)mkl_malloc( p*n*sizeof( double ), 64 );
-    C = (double *)mkl_malloc( m*n*sizeof( double ), 64 );
+    A = (float *)mkl_malloc( m*p*sizeof( float ), 64 );
+    B = (float *)mkl_malloc( p*n*sizeof( float ), 64 );
+    C = (float *)mkl_malloc( m*n*sizeof( float ), 64 );
     if (A == NULL || B == NULL || C == NULL) {
         printf( "\n ERROR: Can't allocate memory for matrices. Aborting... \n\n");
         mkl_free(A);
@@ -72,11 +72,11 @@ int main()
 
     printf (" Intializing matrix data \n\n");
     for (i = 0; i < (m*p); i++) {
-        A[i] = (double)(i+1);
+        A[i] = (float)(i+1);
     }
 
     for (i = 0; i < (p*n); i++) {
-        B[i] = (double)(-i-1);
+        B[i] = (float)(-i-1);
     }
 
     for (i = 0; i < (m*n); i++) {
@@ -96,14 +96,14 @@ int main()
 
         printf (" Making the first run of matrix product using Intel(R) MKL dgemm function \n"
                 " via CBLAS interface to get stable run time measurements \n\n");
-        cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
+        cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
                     m, n, p, alpha, A, p, B, n, beta, C, n);
 
         printf (" Measuring performance of matrix product using Intel(R) MKL dgemm function \n"
                 " via CBLAS interface on %i thread(s) \n\n", i);
         s_initial = dsecnd();
         for (r = 0; r < LOOP_COUNT; r++) {
-            cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
+            cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
                         m, n, p, alpha, A, p, B, n, beta, C, n);
         }
         s_elapsed = (dsecnd() - s_initial) / LOOP_COUNT;

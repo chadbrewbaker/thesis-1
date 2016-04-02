@@ -155,7 +155,7 @@ void strassenQuad(Quad *A, Quad *B, Quad *C, size_t size) {
       // printf("128\n");
       asmMul128(A->matrix, B->matrix, C->matrix);
     #endif
-    
+
     #elif DATATYPE == 1
     // #if FIXEDSIZE == 32
     //   asmMul32(A->matrix, B->matrix, C->matrix);
