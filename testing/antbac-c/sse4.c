@@ -34,7 +34,6 @@ void run_d() {
   double_32 *r = double_matrix();
   printf("Double 2x2:\n-----------\n");
   print_d_2(a, b);
-  transpose_2_2_double(b);
   matrix_mul_2_2_double(a, b, r);
   print_d(r);
   printf("\n\n");
@@ -77,7 +76,6 @@ void run_f() {
   float_32 *r = float_matrix();
   printf("Float 4x4:\n-----------\n");
   print_f_2(a, b);
-  transpose_4_4_float(b);
   matrix_mul_4_4_float(a, b, r);
   print_f(r);
   printf("\n\n");
@@ -88,6 +86,6 @@ void run_f() {
 
 int main(int argc, char const *argv[]) {
   srand(time(0));
-  run_d();
+  //run_d();
   run_f();
 }
