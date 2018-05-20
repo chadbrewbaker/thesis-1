@@ -17,14 +17,14 @@
 # Return : %eax for an int or %rax for a long
 #
 
-.section .text
-.globl asmMul
-.type asmMul, @function
+.text
+.globl _asmMul
+#.type asmMul, @function
 # Parameters:
 # %rdi = pointer to a-array
 # %rsi = pointer to b-array
 # %rdx = pointer to c-array
-asmMul:
+_asmMul:
 xor %rax,%rax                             # Set rax to 0
 xor %r10,%r10                             # Set register r10 to 0
 

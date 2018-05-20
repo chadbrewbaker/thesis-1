@@ -1,4 +1,5 @@
 #include "quad.h"
+#include <stdlib.h>
 
 void constructQuad(Quad *quad) {
   if (quad->elements > FIXEDSIZE * FIXEDSIZE) {
@@ -60,8 +61,12 @@ void freeQuadRecursive(Quad *quad) {
 }
 
 Quad *newQuad(size_t size) {
-  Quad *temp = (Quad *)aligned_alloc(32, sizeof(Quad));
-  my_type *matrix = (my_type *)aligned_alloc(32, size * size * sizeof(my_type));
+  Quad *temp;
+  int err1 = posix_memalign((void**)  &temp, 32,sizeof(Quad) );
+  //Quad *temp = (Quad *)aligned_alloc(32, sizeof(Quad));
+  my_type *matrix;
+  //my_type *matrix = (my_type *)aligned_alloc(32, size * size * sizeof(my_type));
+  int err = posix_memalign((void**) &matrix, 32, size * size * sizeof(my_type));
   temp->elements = size * size;
   temp->matrix = matrix;
   constructQuad(temp);

@@ -2,9 +2,11 @@
 
 my_type **getArray(size_t size) {
   my_type **arr;
-  arr = (my_type **)aligned_alloc(32, sizeof(my_type *) * size);
-  arr[0] = (my_type *)aligned_alloc(32, sizeof(my_type) * size * size);
-
+ int err =0;
+  //arr = (my_type **)aligned_alloc(32, sizeof(my_type *) * size);
+  err = posix_memalign((void **) &arr, 32, sizeof(my_type *) * size);
+  //arr[0] = (my_type *)aligned_alloc(32, sizeof(my_type) * size * size);
+  err = posix_memalign((void **) &(arr[0]), 32, sizeof(my_type) * size * size);
   for (size_t i = 0; i < size; i++)
     arr[i] = (*arr + size * i);
   return arr;
